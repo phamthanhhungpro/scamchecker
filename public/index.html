@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheckScam</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="checkscam-logo.png" alt="CheckScam">
+            <span>an toàn giao dịch</span>
+        </div>
+        <nav>
+            <a href="#">Quỹ bảo hiểm</a>
+            <a href="#">Scammer</a>
+            <a href="#">Trung gian</a>
+            <a href="#">Tin tức</a>
+        </nav>
+        <div class="user-actions">
+            <button class="report-button">Tố cáo</button>
+            <button class="account-button">Tài khoản</button>
+        </div>
+    </header>
+    <main>
+        <section class="check-scammer">
+            <h1>KIỂM TRA SCAMMER</h1>
+            <p>Hiện có 35.596 stk, sđt & 4.284 fb lừa đảo, 2.087 bình luận, 64 tố cáo đang chờ duyệt.<br>
+                Sẽ giúp bạn mua bán an toàn hơn khi online !!!
+            </p>
+            <div class="search-bar">
+                <input id="key-input" type="text" placeholder="Nhập SĐT, Email hoặc Số tài khoản để kiểm tra...">
+                <button class="search-button" onclick="check()">TRA CỨU</button>
+            </div>
+            <div class="action-buttons">
+                <button class="report-button">Gửi tố cáo</button>
+                <button class="insurance-button">Quỹ bảo hiểm</button>
+            </div>
+        </section>
+        <section class="check-scammer" id="scam-info" style="display: none;">
+
+        </section>
+    </main>
+
+    <script>
+        const endpointb = "http://localhost:3000/";
+        const check = () => {
+            let key = document.getElementById("key-input").value;
+            fetch(`${endpointb}check?key=${key}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayCheckInfo(data);
+                })
+
+        };
+
+        const displayCheckInfo = (data) => {
+            let scamInfoBlock = document.getElementById("scam-info");
+            scamInfoBlock.style.display = "block";
+            scamInfoBlock.innerHTML = `
+            <p>${data.text}</p>
+            `
+        }
+
+    </script>
+</body>
+</html>
