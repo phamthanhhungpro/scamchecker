@@ -7,7 +7,7 @@
     <link rel="icon" href="assets/favicon.png" type="image/x-icon">
     <title>Kiểm tra - Tố cáo lừa đảo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="../assets/styles.css">
 </head>
 
 <body>
@@ -16,7 +16,7 @@
         <div class="container d-flex justify-content-between align-items-center py-2">
             <div class="logo">
                 <a class="link-logo" href="/">
-                    <img src="assets/logo.png" alt="CheckScam">
+                    <img src="../assets/logo.png" alt="CheckScam">
                     <span>TỰ TIN GIAO DỊCH</span>
                 </a>
             </div>
@@ -42,17 +42,20 @@
                 mua bán an toàn hơn khi online !!!</p>
             <div class="search-bar">
                 <input id="key-input" type="text" placeholder="Nhập SĐT, Email hoặc Số tài khoản để kiểm tra...">
-                <button class="search-button" onclick="checkClick()">Check</button>
+                <button class="search-button" onclick="check()">Check</button>
             </div>
-            <div class="text-center" style="padding: 10px">
-                <button class="btn btn-danger" style="margin-right: 10px">Gửi tố cáo</button>
-                <button class="btn btn-success">Quỹ bảo hiểm</button></div>
+            <div class="text-center" style="padding: 10px"><a href="https://checkscam.com/posts/to-cao-scam"><button
+                        class="btn btn-danger" style="margin-right: 10px"><i class="fal fa-exclamation-triangle"></i>
+                        Gửi tố cáo</button></a><a href="https://checkscam.com/trusted">
+                    <button class="btn btn-success"><i class="fa fa-check-circle"></i> Quỹ bảo hiểm</button></a></div>
         </section>
 
         <!-- Table Section -->
         <section class="scam-list-table">
-            <h3 class="fw-bold text-center mb-4"></h3>
-            <p class="fw-bold text-center">Tổng hợp các tố cáo Scam mới nhất</p>
+            <div id="alert-check" class="alert alert-danger" role="alert">
+                <!-- Content here -->
+            </div>
+            <p class="fw-bold text-center">Danh sách kết quả kiểm tra</p>
             <div class="table-responsive">
                 <table class="table table-bordered text-center">
                     <thead class="table-light">
@@ -71,10 +74,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-2 text-center">
-                <a href="#">
-                    <button class="btn btn-success">Xem thêm tố cáo mới nhất</button></a>
-            </div>
         </section>
     </main>
 
@@ -83,15 +82,11 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/app.js"></script>
+    <script src="../assets/app.js"></script>
     <script>
-        fillDataTableHomepage();
-
-        function checkClick() {
-            var inputValue = document.getElementById("key-input").value;
-            window.location.href = "/check?key=" + inputValue;
-        };
-
+        const urlParams = new URLSearchParams(window.location.search);
+        const key = urlParams.get('key');
+        fillDataTableCheckPage(key);
     </script>
 </body>
 
