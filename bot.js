@@ -32,7 +32,7 @@ bot.onText(/\/check (.+)/, async (msg, match) => {
 
     try {
         // Make an HTTP request to the external API
-        const response = await axios.get(`http://localhost:3000/check?key=${key}`);
+        const response = await axios.get(`https://scamchecker.onrender.com/check?key=${key}`);
         
         // Send the API response back to the user
         bot.sendMessage(chatId, `${response.data.text}`);
