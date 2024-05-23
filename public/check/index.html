@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
     <title>Kiểm tra - Tố cáo lừa đảo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/styles.css">
@@ -42,7 +42,7 @@
                 mua bán an toàn hơn khi online !!!</p>
             <div class="search-bar">
                 <input id="key-input" type="text" placeholder="Nhập SĐT, Email hoặc Số tài khoản để kiểm tra...">
-                <button class="search-button" onclick="check()">Check</button>
+                <button class="search-button" onclick="checkClick()">Check</button>
             </div>
             <div class="text-center" style="padding: 10px"><a href="https://checkscam.com/posts/to-cao-scam"><button
                         class="btn btn-danger" style="margin-right: 10px"><i class="fal fa-exclamation-triangle"></i>
@@ -57,7 +57,7 @@
             </div>
             <p class="fw-bold text-center">Danh sách kết quả kiểm tra</p>
             <div class="table-responsive">
-                <table class="table table-bordered text-center">
+                <table class="table table-bordered table-striped table-hover text-center">
                     <thead class="table-light">
                         <tr>
                             <th>Người bị tố cáo</th>
@@ -87,6 +87,16 @@
         const urlParams = new URLSearchParams(window.location.search);
         const key = urlParams.get('key');
         fillDataTableCheckPage(key);
+
+        function checkClick() {
+            var inputValue = document.getElementById("key-input").value;
+
+            if(!inputValue) {
+                alert("Vui lòng nhập thông tin!");
+                return;
+            }
+            window.location.href = "/check?key=" + inputValue;
+        };
     </script>
 </body>
 

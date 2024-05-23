@@ -30,6 +30,9 @@ const fillDataTableHomepage = () => {
                     <td>${scammer.viewCount}</td>
                     <td>${scammer.time}</td>
                 `;
+                row.addEventListener("click", () => {
+                    gotoDetail(scammer.link);
+                });
                 document.getElementById("list-scammers").appendChild(row);
             });
 
@@ -62,6 +65,9 @@ const fillDataTableCheckPage = (key) => {
                     <td>${scammer.viewCount}</td>
                     <td>${scammer.time}</td>
                 `;
+                row.addEventListener("click", () => {
+                    gotoDetail(scammer.link);
+                });
                 document.getElementById("list-scammers").appendChild(row);
             });
 
@@ -70,4 +76,10 @@ const fillDataTableCheckPage = (key) => {
             console.error(error);
         });
 
+};
+
+const gotoDetail = (link) => {
+    const linkParts = link.split("/");
+    const extractedLink = linkParts[linkParts.length - 1].replace(".html", "");
+    window.location.href = `/detail?link=${extractedLink}`;
 };
