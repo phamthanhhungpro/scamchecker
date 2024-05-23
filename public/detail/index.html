@@ -8,6 +8,8 @@
     <title>Kiểm tra - Tố cáo lừa đảo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/styles.css">
+    <link rel="stylesheet" href="detail.css">
+
 </head>
 
 <body>
@@ -52,27 +54,53 @@
 
         <!-- Table Section -->
         <section class="scam-list-table">
-            <div id="alert-check" class="alert alert-danger" role="alert">
-                <!-- Content here -->
-            </div>
-            <p class="fw-bold text-center">Danh sách kết quả kiểm tra</p>
-            <div class="table-responsive">
-                <table class="table table-bordered text-center">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Người bị tố cáo</th>
-                            <th>Số tiền</th>
-                            <th>SDT</th>
-                            <th>STK</th>
-                            <th>Ngân hàng</th>
-                            <th>Lượt xem</th>
-                            <th>Ngày</th>
-                        </tr>
-                    </thead>
-                    <tbody id="list-scammers">
-                        <!-- Data populated here -->
-                    </tbody>
-                </table>
+            <div class="container mt-4">
+                <div class="row">
+                    <!-- Scam Info Section -->
+                    <div class="col-lg-8 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-danger">Thông tin Scam</h5>
+                                <div class="mb-2"><strong>Chủ TK:</strong> NGUYEN HOANG MINH NGOC</div>
+                                <div class="mb-2"><strong>STK:</strong> 19072690491011</div>
+                                <div class="mb-2"><strong>Ngân hàng:</strong> VIETCOMBANK</div>
+                                <div class="mb-2"><strong>Số tiền chiếm đoạt:</strong> <span class="text-danger">140,000 đ</span></div>
+                                <div class="mb-2"><strong>Hạng mục:</strong> Bán hàng Online</div>
+                                <h5 class="mt-3">Ảnh Chụp Bằng Chứng:</h5>
+                                <div class="evidence mb-3">
+                                    <img src="mnt/data/Capture.PNG" alt="Evidence Image" class="img-fluid">
+                                </div>
+                                <h5 class="mt-3">Nội dung tố cáo:</h5>
+                                <p class="report-content">Minh có thấy con này pass phần Judydoll nên mua. Tui không để ý check nên chuyển full cho nó để mua. Chuyển xong nó block tui :))). Ngoài tui ra nó còn lừa rất nhiều người, mong mọi người thấy và né con nhỏ này ra. 2k6 chuẩn bị thi đại học đê MN. Chúc em rớt đi dh, đầu đường xó chợ nha em gái. Sống cả đời cũng không ngẩng mặt lên được đâu em. Tui biết thông tin nó đang sống ở Vũng tàu thôi, địa chỉ sdt nó để lung tung.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Reporter Info Section -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title text-danger">Người tố cáo</h5>
+                                <div class="mb-2"><strong>Họ và tên:</strong> Nguyễn Gia Hân</div>
+                                <div class="mb-2"><strong>Zalo liên hệ:</strong> 076736****</div>
+                                <div class="mb-2"><strong>Điểm uy tín:</strong> 0</div>
+                                <div class="mb-2"><strong>Lượt tố cáo:</strong> 1</div>
+                                <div class="mb-2"><strong>Ngày tham gia:</strong> 22-05-2024</div>
+                            </div>
+                        </div>
+                        <!-- Recent Scammers List -->
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-danger">Scammer gần đây</h5>
+                                <ul class="list-unstyled scammer-list">
+                                    <li><strong>DINH THI HANG</strong> - <span class="text-danger">1,100,000đ</span> - 29-04-2024</li>
+                                    <li><strong>Thạch Hải Anh</strong> - <span class="text-danger">7,900,000đ</span> - 27-04-2024</li>
+                                    <li><strong>TRUONG VAN THAI</strong> - <span class="text-danger">3,150,000đ</span> - 25-04-2024</li>
+                                    <li><strong>Nguyễn Minh Dũng</strong> - <span class="text-danger">300,000đ</span> - 19-04-2024</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
