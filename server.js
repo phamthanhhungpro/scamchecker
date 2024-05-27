@@ -115,6 +115,68 @@ app.get("/api/getAllScams", async (req, res) => {
   }
 });
 
+
+app.get("/api/getScamDetail", async (req, res) => {
+  const id = req.query.id;
+  try {
+    // URL to scrape
+    const url = `https://checkscam.com/scams/${id}.html`;
+
+    // Fetch the HTML of the page
+    const { data } = await axios.get(url);
+
+    // Load the HTML into cheerio
+    const $ = cheerio.load(data);
+
+    // Define a CSS selector to target the product elements
+    const scamInfoSelector = "[class='scammer-information'] .scammer-body";
+
+    // Extract data from the HTML
+
+      let name = $(scamInfoSelector).find(">div:nth-child(1) .information-item_value").text().trim();
+      let bankAccount = $(scamInfoSelector).find(">div:nth-child(2) .information-item_value").text().trim();
+      let bankName = $(scamInfoSelector).find(">div:nth-child(3) .information-item_value").text().trim();
+      let money = $(scamInfoSelector).find(">div:nth-child(4) .information-item_value").text().trim();
+      let type = $(scamInfoSelector).find(">div:nth-child(5) .information-item_value").text().trim();
+      let content = $(scamInfoSelector).find(">div:nth-child(7) .information-item_value").text().trim();
+
+      const imageSelector = ".information-item_images a";
+      const imageUrls = [];
+      $(imageSelector).each((index, element) => {
+          let imageUrl = $(element).attr("href");
+          imageUrls.push(imageUrl);
+      });
+
+      const scamReporterSelector = ".scammer-information.scammer-information_sidebar .scammer-body"
+      let reporterName = $(scamReporterSelector).find(">div:nth-child(1) .information-item_value").text().trim();
+      let reporterPhone = $(scamReporterSelector).find(">div:nth-child(2) .information-item_value").text().trim();
+      let reporterReputation = $(scamReporterSelector).find(">div:nth-child(3) .information-item_value").text().trim();
+      let reportCount = $(scamReporterSelector).find(">div:nth-child(4) .information-item_value").text().trim();
+      let joinDate = $(scamReporterSelector).find(">div:nth-child(5) .information-item_value").text().trim();
+
+
+      let scamDetail = {
+        name,
+        bankAccount,
+        bankName,
+        money,
+        type,
+        imageUrls,
+        content,
+        reporterName,
+        reporterPhone,
+        reporterReputation,
+        reportCount,
+        joinDate
+      };
+
+    res.json(scamDetail);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error occurred while get data");
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
