@@ -2,6 +2,8 @@ const express = require("express");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
+const { initializeDatabase, Reports } = require('./db/db.js');
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,6 +11,7 @@ const PORT = process.env.PORT || 3000;
 // Serve static files from the "public" directory
 app.use(express.static("public"));
 app.use(express.json());
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
@@ -177,6 +180,19 @@ app.get("/api/getScamDetail", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.post('/report-scam', async (req, res) => {
+  try {
+      const newScammer = await Reports.create(req.body);
+      res.status(201).json(newScammer);
+  } catch (error) {
+      console.error('Error creating new Reports:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
+
+initializeDatabase()
+    .finally(() => {
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    });
