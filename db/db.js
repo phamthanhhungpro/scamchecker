@@ -7,6 +7,11 @@ const sequelize = new Sequelize('scamchecker', 'logstore', 'Logstore@1331', {
 });
 
 const Reports = sequelize.define('Reports', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     scammerName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -62,6 +67,50 @@ const Reports = sequelize.define('Reports', {
     },
 }, {
     timestamps: true, // Add createdAt and updatedAt fields
+});
+
+const Scammers = sequelize.define('Scammers', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    money: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
+    phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    bankAccount: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    bankName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    viewCount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+    },
+    time: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    },
+    link: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+}, {
+    timestamps: true,
 });
 
 const fs = require('fs');
