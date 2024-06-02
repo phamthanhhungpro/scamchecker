@@ -28,7 +28,7 @@
             </nav>
             <div>
                 <button class="btn btn-danger mx-1">Tố cáo</button>
-                <button class="btn btn-secondary mx-1">Tài khoản</button>
+                <button class="btn btn-secondary mx-1" onclick="gotoLogin()">Tài khoản</button>
             </div>
         </div>
     </header>
@@ -96,6 +96,9 @@
             window.location.href = "/check?key=" + inputValue;
         };
 
+        function gotoLogin() {
+            window.location.href = "/account/login";
+        }
     </script>
 </body>
 
