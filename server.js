@@ -2,8 +2,9 @@ const express = require("express");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
-const { initializeDatabase, Reports } = require('./db/db.js');
+const { initializeDatabase, Reports, Scammers } = require('./db/db.js');
 const bodyParser = require('body-parser');
+const { Op } = require('sequelize');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,6 +26,24 @@ app.get("/ping", (req, res) => {
 app.get("/api/check", async (req, res) => {
   const keyword = req.query.key;
   try {
+
+    // Get data from own database first
+    const ownData = await Scammers.findAll({
+      where: {
+        [Op.or]: [
+          { name: { [Op.iLike]: `%${keyword}%` } },
+          { phone: { [Op.iLike]: `%${keyword}%` } },
+          { bankAccount: { [Op.iLike]: `%${keyword}%` } },
+        ],
+      },
+    });
+
+    if (ownData.length > 0) {
+      let text = `Tìm thấy ${ownData.length} kết quả từ dữ liệu của chúng tôi.`;
+      res.json({ text, scams: ownData });
+      return;
+    }
+
     // URL to scrape
     const url = `https://checkscam.com/scams?keyword=${keyword}`;
 
@@ -39,33 +58,42 @@ app.get("/api/check", async (req, res) => {
     )
       .text()
       .trim();
-      const scamSelector = "[class=scam-card]";
+    const scamSelector = "[class=scam-card]";
 
-      // Extract data from the HTML
-      const scams = [];
-      $(scamSelector).each((index, element) => {
-        let name = $(element).find(".limit").text().trim();
-        let money = $(element).find(".scam-price").text().trim();
-        let phone = $(element).find(">div:nth-child(3)").text().trim();
-        let bankAccount = $(element).find(">div:nth-child(4)").text().trim();
-        let bankName = $(element).find(">div:nth-child(5)").text().trim();
-        let viewCount = $(element).find(">div:nth-child(6)").text().trim();
-        let time = $(element).find(">div:nth-child(7)").text().trim();
-        let link = $(element).find("a").attr("href");
-  
-        scams.push({
-          name,
-          money,
-          phone,
-          bankAccount,
-          bankName,
-          viewCount,
-          time,
-          link,
-        });
+    // Extract data from the HTML
+    const scams = [];
+    $(scamSelector).each((index, element) => {
+      let name = $(element).find(".limit").text().trim();
+      let money = $(element).find(".scam-price").text().trim();
+      let phone = $(element).find(">div:nth-child(3)").text().trim();
+      let bankAccount = $(element).find(">div:nth-child(4)").text().trim();
+      let bankName = $(element).find(">div:nth-child(5)").text().trim();
+      let viewCount = $(element).find(">div:nth-child(6)").text().trim();
+      let time = $(element).find(">div:nth-child(7)").text().trim();
+      let link = $(element).find("a").attr("href");
+
+      scams.push({
+        name,
+        money,
+        phone,
+        bankAccount,
+        bankName,
+        viewCount,
+        time,
+        link,
       });
-  
-      res.json({text, scams});
+    });
+
+    if(scams.length > 0) {
+      // Save to own database
+      try {
+        await Scammers.bulkCreate(scams);
+      } catch (error) {
+        console.error('Error saving data to own database:', error);
+      }
+    }
+
+    res.json({ text, scams });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error occurred while get data");
@@ -136,42 +164,42 @@ app.get("/api/getScamDetail", async (req, res) => {
 
     // Extract data from the HTML
 
-      let name = $(scamInfoSelector).find(">div:nth-child(1) .information-item_value").text().trim();
-      let bankAccount = $(scamInfoSelector).find(">div:nth-child(2) .information-item_value").text().trim();
-      let bankName = $(scamInfoSelector).find(">div:nth-child(3) .information-item_value").text().trim();
-      let money = $(scamInfoSelector).find(">div:nth-child(4) .information-item_value").text().trim();
-      let type = $(scamInfoSelector).find(">div:nth-child(5) .information-item_value").text().trim();
-      let content = $(scamInfoSelector).find(">div:nth-child(7) .information-item_value").text().trim();
+    let name = $(scamInfoSelector).find(">div:nth-child(1) .information-item_value").text().trim();
+    let bankAccount = $(scamInfoSelector).find(">div:nth-child(2) .information-item_value").text().trim();
+    let bankName = $(scamInfoSelector).find(">div:nth-child(3) .information-item_value").text().trim();
+    let money = $(scamInfoSelector).find(">div:nth-child(4) .information-item_value").text().trim();
+    let type = $(scamInfoSelector).find(">div:nth-child(5) .information-item_value").text().trim();
+    let content = $(scamInfoSelector).find(">div:nth-child(7) .information-item_value").text().trim();
 
-      const imageSelector = ".information-item_images a";
-      const imageUrls = [];
-      $(imageSelector).each((index, element) => {
-          let imageUrl = $(element).attr("href");
-          imageUrls.push(imageUrl);
-      });
+    const imageSelector = ".information-item_images a";
+    const imageUrls = [];
+    $(imageSelector).each((index, element) => {
+      let imageUrl = $(element).attr("href");
+      imageUrls.push(imageUrl);
+    });
 
-      const scamReporterSelector = ".scammer-information.scammer-information_sidebar .scammer-body"
-      let reporterName = $(scamReporterSelector).find(">div:nth-child(1) .information-item_value").text().trim();
-      let reporterPhone = $(scamReporterSelector).find(">div:nth-child(2) .information-item_value").text().trim();
-      let reporterReputation = $(scamReporterSelector).find(">div:nth-child(3) .information-item_value").text().trim();
-      let reportCount = $(scamReporterSelector).find(">div:nth-child(4) .information-item_value").text().trim();
-      let joinDate = $(scamReporterSelector).find(">div:nth-child(5) .information-item_value").text().trim();
+    const scamReporterSelector = ".scammer-information.scammer-information_sidebar .scammer-body"
+    let reporterName = $(scamReporterSelector).find(">div:nth-child(1) .information-item_value").text().trim();
+    let reporterPhone = $(scamReporterSelector).find(">div:nth-child(2) .information-item_value").text().trim();
+    let reporterReputation = $(scamReporterSelector).find(">div:nth-child(3) .information-item_value").text().trim();
+    let reportCount = $(scamReporterSelector).find(">div:nth-child(4) .information-item_value").text().trim();
+    let joinDate = $(scamReporterSelector).find(">div:nth-child(5) .information-item_value").text().trim();
 
 
-      let scamDetail = {
-        name,
-        bankAccount,
-        bankName,
-        money,
-        type,
-        imageUrls,
-        content,
-        reporterName,
-        reporterPhone,
-        reporterReputation,
-        reportCount,
-        joinDate
-      };
+    let scamDetail = {
+      name,
+      bankAccount,
+      bankName,
+      money,
+      type,
+      imageUrls,
+      content,
+      reporterName,
+      reporterPhone,
+      reporterReputation,
+      reportCount,
+      joinDate
+    };
 
     res.json(scamDetail);
   } catch (error) {
@@ -182,17 +210,17 @@ app.get("/api/getScamDetail", async (req, res) => {
 
 app.post('/report-scam', async (req, res) => {
   try {
-      const newScammer = await Reports.create(req.body);
-      res.status(201).json(newScammer);
+    const newScammer = await Reports.create(req.body);
+    res.status(201).json(newScammer);
   } catch (error) {
-      console.error('Error creating new Reports:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Error creating new Reports:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
 initializeDatabase()
-    .finally(() => {
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        });
+  .finally(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
     });
+  });

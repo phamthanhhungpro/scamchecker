@@ -80,7 +80,7 @@ const Scammers = sequelize.define('Scammers', {
         allowNull: false,
     },
     money: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     phone: {
@@ -96,14 +96,12 @@ const Scammers = sequelize.define('Scammers', {
         allowNull: false,
     },
     viewCount: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     time: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     link: {
         type: DataTypes.STRING,
@@ -133,10 +131,12 @@ const initializeDatabase = async () => {
         await sequelize.authenticate();
         appendToFile(`Connection to PostgreSQL has been established successfully.`);
         await Reports.sync({ alter: true });
+        await Scammers.sync({ alter: true });
+
         console.log('Reports table has been synchronized.');
     } catch (error) {
         appendToFile('Unable to connect to the database or synchronize the table:', error.message);
     }
 };
 
-module.exports = { sequelize, Reports, initializeDatabase };
+module.exports = { sequelize, Reports, Scammers, initializeDatabase };
