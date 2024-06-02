@@ -30,9 +30,12 @@ const fillDataTableHomepage = () => {
                     <td>${scammer.viewCount}</td>
                     <td>${scammer.time}</td>
                 `;
-                row.addEventListener("click", () => {
+                let td = document.createElement("td");
+                td.innerHTML = `<i class="fa-sharp fa-solid fa-eye eyeShowDetail"></i>`;
+                td.addEventListener("click", () => {
                     gotoDetail(scammer.link);
                 });
+                row.appendChild(td);
                 document.getElementById("list-scammers").appendChild(row);
             });
 
@@ -50,7 +53,7 @@ const fillDataTableCheckPage = (key) => {
             let element = document.getElementById("alert-check");
             element.innerText = data.text;
 
-            if(data.scams.length === 0) {
+            if (data.scams.length === 0) {
                 document.getElementById("alert-check").classList.remove("alert-danger");
                 document.getElementById("alert-check").classList.add("alert-success");
             }
@@ -76,6 +79,14 @@ const fillDataTableCheckPage = (key) => {
             console.error(error);
         });
 
+};
+
+const getDetailScammer = (id) => {
+    return fetch(`${endpointb}getScamDetail?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        });
 };
 
 const gotoDetail = (link) => {
