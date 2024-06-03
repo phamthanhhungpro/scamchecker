@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
+    <title>Kiểm tra - Tố cáo lừa đảo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <link rel="stylesheet" href="../../assets/font-awesome/css/all.css" />
+    <style>
+        .card-title {
+            font-size: 24px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+        }
+
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+
+        .btn-success {
+            display: block;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="border-bottom mb-3">
+        <div class="container d-flex justify-content-between align-items-center py-2">
+            <div class="logo">
+                <a class="link-logo" href="/">
+                    <img src="../../assets/logo.png" alt="CheckScam">
+                    <span>TỰ TIN GIAO DỊCH</span>
+                </a>
+            </div>
+            <nav>
+                <a href="#" class="mx-2 text-dark">Quỹ bảo hiểm</a>
+                <a href="#" class="mx-2 text-dark">Scammer</a>
+                <a href="#" class="mx-2 text-dark">Trung gian</a>
+                <a href="#" class="mx-2 text-dark">Tin tức</a>
+            </nav>
+            <div>
+                <button class="btn btn-danger mx-1">Tố cáo</button>
+                <button id="account-button" class="btn btn-secondary mx-1">
+                    <!-- js generator -->
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Sửa thông tin tài khoản</h2>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Tên đăng nhập</label>
+                        <input type="text" class="form-control" id="username" value="nam98vp" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fullname" class="form-label">Họ và tên</label>
+                        <input type="text" class="form-control" id="fullname" value="Nguyễn Huy Hoài Nam">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" value="nam98vp@gmail.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control" id="phone">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Giới tính</label><br>
+                        <input type="radio" id="male" name="gender" value="male">
+                        <label for="male">Nam</label><br>
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">Nữ</label><br>
+                        <input type="radio" id="other" name="gender" value="other">
+                        <label for="other">Không khai báo</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="language" class="form-label">Ngôn ngữ</label>
+                        <select class="form-control" id="language">
+                            <option>--- ---</option>
+                            <!-- Add other options here -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="currency" class="form-label">Loại tiền tệ của bạn</label>
+                        <input type="text" class="form-control" id="currency" value="VND">
+                    </div>
+                    <div class="mb-3">
+                        <label for="country" class="form-label">Quốc gia</label>
+                        <input type="text" class="form-control" id="country" value="Vietnam">
+                    </div>
+                    <div class="mb-3">
+                        <label for="secondaryPassword" class="form-label">Mật khẩu cấp 2</label>
+                        <input type="password" class="form-control" id="secondaryPassword">
+                    </div>
+                    <div class="mb-3">
+                        <label for="avatar" class="form-label">Avatar</label>
+                        <input type="file" class="form-control-file" id="avatar">
+                    </div>
+                    <button type="submit" class="btn btn-success">Cập nhật thông tin</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5 py-3 bg-light">
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../../assets/app.js"></script>
+    <script>
+    </script>
+</body>
+
+</html>

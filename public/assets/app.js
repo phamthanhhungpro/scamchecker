@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     Tài khoản
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Thông tin tài khoản</a>
+                    <a class="dropdown-item" href="/account/profile">Thông tin tài khoản</a>
                     <a class="dropdown-item" href="#">Đăng ký GDV/Bảo hiểm</a>
                     <a class="dropdown-item" href="#">Trung gian</a>
                     <a class="dropdown-item" href="#" id="logout">Đăng xuất</a>
