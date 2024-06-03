@@ -1,0 +1,20 @@
+body {
+    background-color: #f9f9f9;
+}
+
+h1, h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+form .form-row {
+    margin-bottom: 15px;
+}
+
+form .form-group {
+    margin-bottom: 15px;
+}
+
+button {
+    margin-top: 20px;
+}

@@ -7,6 +7,7 @@ const cors = require('cors');
 const { initializeDatabase, Reports, Scammers } = require('./db/db.js');
 const bodyParser = require('body-parser');
 const { Op } = require('sequelize');
+const upload = require('./db/multer.js');
 const userRoutes = require('./controller/user.js');
 
 const app = express();
@@ -214,14 +215,55 @@ app.get("/api/getScamDetail", async (req, res) => {
   }
 });
 
-app.post('/report-scam', async (req, res) => {
-  try {
-    const newScammer = await Reports.create(req.body);
-    res.status(201).json(newScammer);
-  } catch (error) {
-    console.error('Error creating new Reports:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+app.post('/send-report', (req, res) => {
+  upload(req, res, async (err) => {
+      if (err) {
+          console.error(err);
+          return res.status(500).send('Server Error');
+      }
+
+      try {
+          const {
+              scammerName,
+              accountNumber,
+              bank,
+              amount,
+              website,
+              phone,
+              category,
+              email,
+              content,
+              source,
+              reporterName,
+              reporterPhone
+          } = req.body;
+
+          // Save file paths
+          const uploadFiles = req.files.map(file => file.path);
+
+          await Reports.create({
+              scammerName: scammerName,
+              accountNumber: accountNumber,
+              bank: bank,
+              amount: amount,
+              phone: phone,
+              website: website,
+              category: category,
+              email: email,
+              content: content,
+              source: source,
+              reporterName: reporterName,
+              reporterPhone: reporterPhone,
+              uploadFiles: uploadFiles,
+              date: new Date()
+          });
+
+          res.json({ success: true });
+      } catch (error) {
+          console.error(error);
+          res.status(500).json({ success: false, error: 'Server Error' });
+      }
+  });
 });
 
 // Example protected route
