@@ -94,3 +94,95 @@ const gotoDetail = (link) => {
     const extractedLink = linkParts[linkParts.length - 1].replace(".html", "");
     window.location.href = `/detail?link=${extractedLink}`;
 };
+
+const registerUser = async () => {
+    const username = document.getElementById('username').value;
+    const fullName = document.getElementById('fullname').value;
+    const emailOrPhone = document.getElementById('emailOrPhone').value;
+    const password = document.getElementById('password').value;
+
+    const response = await fetch(`${endpointb}user/register`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password, fullName, emailOrPhone }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+        alert('Đăng kí thành viên thành công!');
+        window.location.href = '/account/login';
+    } else {
+        alert('Có lỗi xảy ra!');
+    }
+}
+
+const login = async () => {
+    const emailOrPhone = document.getElementById('emailOrPhone').value;
+    const password = document.getElementById('password').value;
+
+    const response = await fetch(`${endpointb}user/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ emailOrPhone, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+        alert('Đăng nhập thành công!');
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('emailOrPhone', data.emailOrPhone);
+        localStorage.setItem('role', data.role);
+
+        window.location.href = '/';
+    } else {
+        alert('Có lỗi xảy ra!');
+    }
+}
+
+const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('emailOrPhone');
+    localStorage.removeItem('role');
+    window.location.href = '/account/login';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const accountButton = document.getElementById('account-button');
+    const token = localStorage.getItem('token');
+
+    if (token) {
+        // User is logged in
+        accountButton.outerHTML = `
+            <div class="dropdown d-inline-block">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Tài khoản
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Thông tin tài khoản</a>
+                    <a class="dropdown-item" href="#">Đăng ký GDV/Bảo hiểm</a>
+                    <a class="dropdown-item" href="#">Trung gian</a>
+                    <a class="dropdown-item" href="#" id="logout">Đăng xuất</a>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('logout').addEventListener('click', () => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+
+            window.location.reload(); // Reload the page to show the Login button
+        });
+    } else {
+        // User is not logged in
+        accountButton.innerHTML = 'Đăng nhập';
+        accountButton.addEventListener('click', () => {
+            window.location.href = '/account/login';
+        });
+    }
+});

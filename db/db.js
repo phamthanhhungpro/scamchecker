@@ -111,6 +111,34 @@ const Scammers = sequelize.define('Scammers', {
     timestamps: true,
 });
 
+const User = sequelize.define('User', {
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    },
+    fullName : {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    emailOrPhone : {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    role: {
+        type: DataTypes.ENUM('ADMIN', 'GDV', 'USER'),
+        defaultValue: 'USER',
+        allowNull: false,
+    }
+},
+{
+    timestamps: true,
+});
+
 const fs = require('fs');
 const path = require('path');
 
@@ -132,6 +160,7 @@ const initializeDatabase = async () => {
         appendToFile(`Connection to PostgreSQL has been established successfully.`);
         await Reports.sync({ alter: true });
         await Scammers.sync({ alter: true });
+        await User.sync({ alter: true });
 
         console.log('Reports table has been synchronized.');
     } catch (error) {
@@ -139,4 +168,4 @@ const initializeDatabase = async () => {
     }
 };
 
-module.exports = { sequelize, Reports, Scammers, initializeDatabase };
+module.exports = { sequelize, Reports, Scammers, User, initializeDatabase };

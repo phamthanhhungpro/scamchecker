@@ -1,10 +1,13 @@
 const express = require("express");
+const auth = require('./middlewares/auth');
+const role = require('./middlewares/role');
 const axios = require("axios");
 const cheerio = require("cheerio");
-const fs = require("fs");
+const cors = require('cors');
 const { initializeDatabase, Reports, Scammers } = require('./db/db.js');
 const bodyParser = require('body-parser');
 const { Op } = require('sequelize');
+const userRoutes = require('./controller/user.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +16,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static("public"));
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(cors()); // Enable CORS
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
@@ -21,6 +25,8 @@ app.get("/", (req, res) => {
 app.get("/ping", (req, res) => {
   res.send("Good!");
 });
+
+app.use('/api/user', userRoutes);
 
 // Define a route for scraping data
 app.get("/api/check", async (req, res) => {
@@ -84,7 +90,7 @@ app.get("/api/check", async (req, res) => {
       });
     });
 
-    if(scams.length > 0) {
+    if (scams.length > 0) {
       // Save to own database
       try {
         await Scammers.bulkCreate(scams);
@@ -217,6 +223,12 @@ app.post('/report-scam', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+// Example protected route
+app.get('/admin', auth, role(['admin']), (req, res) => {
+  res.send('Admin content');
+});
+
 
 initializeDatabase()
   .finally(() => {
