@@ -7,9 +7,31 @@
     <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
     <title>Kiểm tra - Tố cáo lừa đảo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/styles.css">
     <link rel="stylesheet" href="detail.css">
+    <style>
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
 
+        .card-title {
+            font-size: 20px;
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+        }
+
+        .card-body ul {
+            padding-left: 0;
+        }
+
+        .card-body ul li {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,7 +52,9 @@
             </nav>
             <div>
                 <button class="btn btn-danger mx-1">Tố cáo</button>
-                <button class="btn btn-secondary mx-1">Tài khoản</button>
+                <button id="account-button" class="btn btn-secondary mx-1">
+                    <!-- js generator -->
+                </button>
             </div>
         </div>
     </header>
@@ -54,48 +78,77 @@
 
         <!-- Table Section -->
         <section class="scam-list-table">
-            <div class="container mt-4">
+            <div class="container mt-5">
                 <div class="row">
-                    <!-- Scam Info Section -->
-                    <div class="col-lg-8 mb-4">
-                        <div class="card">
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h2 class="card-title text-danger">Thông tin Scam</h2>
+                            </div>
                             <div class="card-body">
-                                <h5 class="card-title text-danger">Thông tin Scam</h5>
-                                <div class="mb-2"><strong>Chủ TK:</strong> NGUYEN HOANG MINH NGOC</div>
-                                <div class="mb-2"><strong>STK:</strong> 19072690491011</div>
-                                <div class="mb-2"><strong>Ngân hàng:</strong> VIETCOMBANK</div>
-                                <div class="mb-2"><strong>Số tiền chiếm đoạt:</strong> <span class="text-danger">140,000 đ</span></div>
-                                <div class="mb-2"><strong>Hạng mục:</strong> Bán hàng Online</div>
+                                <div class="mb-2"><strong>Chủ TK:</strong> <span id="scammer-name"></span></div>
+                                <div class="mb-2"><strong>STK:</strong> <span id="scammer-bank-account"></span></div>
+                                <div class="mb-2"><strong>Ngân hàng:</strong> <span id="scammer-bank-name"></span></div>
+                                <div class="mb-2"><strong>Số tiền chiếm đoạt:</strong> <span class="text-danger"><span
+                                            id="scammer-money"></span></span></div>
+                                <div class="mb-2"><strong>Hạng mục:</strong> <span id="scammer-type"></span></div>
                                 <h5 class="mt-3">Ảnh Chụp Bằng Chứng:</h5>
-                                <div class="evidence mb-3">
+                                <div class="evidence mb-3" id="image-report">
                                     <img src="mnt/data/Capture.PNG" alt="Evidence Image" class="img-fluid">
                                 </div>
                                 <h5 class="mt-3">Nội dung tố cáo:</h5>
-                                <p class="report-content">Minh có thấy con này pass phần Judydoll nên mua. Tui không để ý check nên chuyển full cho nó để mua. Chuyển xong nó block tui :))). Ngoài tui ra nó còn lừa rất nhiều người, mong mọi người thấy và né con nhỏ này ra. 2k6 chuẩn bị thi đại học đê MN. Chúc em rớt đi dh, đầu đường xó chợ nha em gái. Sống cả đời cũng không ngẩng mặt lên được đâu em. Tui biết thông tin nó đang sống ở Vũng tàu thôi, địa chỉ sdt nó để lung tung.</p>
+                                <p class="report-content" id="report-content"></p>
+                                <div>
+                                    <button class="btn btn-success"><i class="fas fa-thumbs-up"></i> Tán thành:
+                                        0</button>
+                                    <button class="btn btn-danger"><i class="fas fa-thumbs-down"></i> Không tán thành:
+                                        0</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">Bình luận</h2>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-group">
+                                        <input type="radio" id="approve" name="approval" value="approve">
+                                        <label for="approve">Tán thành</label><br>
+                                        <input type="radio" id="disapprove" name="approval" value="disapprove">
+                                        <label for="disapprove">Không tán thành</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comment">Nội dung bình luận:</label>
+                                        <textarea class="form-control" id="comment" rows="3"
+                                            placeholder="Nhập nội dung bình luận"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Gửi bình luận</button>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <!-- Reporter Info Section -->
-                    <div class="col-lg-4 mb-4">
+                    <div class="col-md-4">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <h5 class="card-title text-danger">Người tố cáo</h5>
-                                <div class="mb-2"><strong>Họ và tên:</strong> Nguyễn Gia Hân</div>
-                                <div class="mb-2"><strong>Zalo liên hệ:</strong> 076736****</div>
-                                <div class="mb-2"><strong>Điểm uy tín:</strong> 0</div>
-                                <div class="mb-2"><strong>Lượt tố cáo:</strong> 1</div>
-                                <div class="mb-2"><strong>Ngày tham gia:</strong> 22-05-2024</div>
+                                <h3 class="card-title text-danger">Người tố cáo</h3>
+                                <div class="mb-2"><strong>Họ và tên:</strong> <span id="reporter-name"></span></div>
+                                <div class="mb-2"><strong>Zalo liên hệ:</strong> <span id="reporter-phone"></span></div>
+                                <div class="mb-2"><strong>Điểm uy tín:</strong> <span id="reporter-reputation"></span>
+                                </div>
+                                <div class="mb-2"><strong>Lượt tố cáo:</strong> <span id="report-count"></span></div>
+                                <div class="mb-2"><strong>Ngày tham gia:</strong> <span id="joinDate"></span></div>
                             </div>
                         </div>
-                        <!-- Recent Scammers List -->
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title text-danger">Scammer gần đây</h5>
-                                <ul class="list-unstyled scammer-list">
-                                    <li><strong>DINH THI HANG</strong> - <span class="text-danger">1,100,000đ</span> - 29-04-2024</li>
-                                    <li><strong>Thạch Hải Anh</strong> - <span class="text-danger">7,900,000đ</span> - 27-04-2024</li>
-                                    <li><strong>TRUONG VAN THAI</strong> - <span class="text-danger">3,150,000đ</span> - 25-04-2024</li>
-                                    <li><strong>Nguyễn Minh Dũng</strong> - <span class="text-danger">300,000đ</span> - 19-04-2024</li>
+                                <h3 class="card-title text-danger">Scammer gần đây</h3>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-user"></i> Bui Trung Kien - 70,000đ - 16-05-2024</li>
+                                    <li><i class="fas fa-user"></i> NGUYEN DUC ANH - 1,400,000đ - 13-05-2024</li>
+                                    <li><i class="fas fa-user"></i> Y DUY TRIEK - 100,000đ - 28-02-2024</li>
+                                    <li><i class="fas fa-user"></i> Trịnh Duy Bảo Anh - 300,000đ - 14-01-2024</li>
+                                    <li><i class="fas fa-user"></i> Nguyen Anh Tu - 40,000đ - 07-12-2023</li>
                                 </ul>
                             </div>
                         </div>
@@ -109,17 +162,45 @@
     <footer class="text-center mt-5 py-3 bg-light">
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../assets/app.js"></script>
     <script>
+
         const urlParams = new URLSearchParams(window.location.search);
-        const key = urlParams.get('key');
-        fillDataTableCheckPage(key);
+        const link = urlParams.get('link');
+        getDetailScammerData();
+        function getDetailScammerData() {
+            getDetailScammer(link).then((data) => {
+                console.log(data);
+                document.getElementById("scammer-name").innerText = data.name;
+                document.getElementById("scammer-bank-account").innerText = data.bankAccount;
+                document.getElementById("scammer-bank-name").innerText = data.bankName;
+                document.getElementById("scammer-money").innerText = data.money;
+                document.getElementById("scammer-type").innerText = data.type;
+                document.getElementById("report-content").innerText = data.content;
+                let div = document.getElementById("image-report");
+                div.innerHTML = "";
+                data.imageUrls.forEach((url) => {
+                    let img = document.createElement("img");
+                    img.src = url;
+                    img.className = "img-fluid";
+                    div.appendChild(img);
+                });
+
+                document.getElementById("reporter-name").innerText = data.reporterName;
+                document.getElementById("reporter-phone").innerText = data.reporterPhone;
+                document.getElementById("reporter-reputation").innerText = data.reporterReputation;
+                document.getElementById("report-count").innerText = data.reportCount;
+                document.getElementById("joinDate").innerText = data.joinDate;
+            });
+        }
 
         function checkClick() {
             var inputValue = document.getElementById("key-input").value;
 
-            if(!inputValue) {
+            if (!inputValue) {
                 alert("Vui lòng nhập thông tin!");
                 return;
             }

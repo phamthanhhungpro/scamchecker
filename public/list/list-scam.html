@@ -8,6 +8,75 @@
     <title>Kiểm tra - Tố cáo lừa đảo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/styles.css">
+    <link rel="stylesheet" href="../assets/font-awesome/css/all.css" />
+    <style>
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+
+        .table td i {
+            margin-right: 5px;
+        }
+
+        .pagination ul {
+            justify-content: center;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            background: #fff;
+            padding: 8px;
+            border-radius: 50px;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .pagination ul li {
+            color: #118f61;
+            list-style: none;
+            line-height: 30px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .pagination ul li.numb {
+            list-style: none;
+            height: 30px;
+            width: 30px;
+            margin: 0 3px;
+            line-height: 30px;
+            border-radius: 50%;
+        }
+
+        .pagination ul li.numb.first {
+            margin: 0px 3px 0 -5px;
+        }
+
+        .pagination ul li.numb.last {
+            margin: 0px -5px 0 3px;
+        }
+
+        .pagination ul li.dots {
+            font-size: 15px;
+            cursor: default;
+        }
+
+        .pagination ul li.btn {
+            padding: 0 20px;
+            border-radius: 50px;
+        }
+
+        .pagination li.active,
+        .pagination ul li.numb:hover,
+        .pagination ul li:first-child:hover,
+        .pagination ul li:last-child:hover {
+            color: #fff;
+            background: #dc3545;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,7 +97,9 @@
             </nav>
             <div>
                 <button class="btn btn-danger mx-1">Tố cáo</button>
-                <button class="btn btn-secondary mx-1">Tài khoản</button>
+                <button id="account-button" class="btn btn-secondary mx-1">
+                    <!-- js generator -->
+                </button>
             </div>
         </div>
     </header>
@@ -52,27 +123,25 @@
 
         <!-- Table Section -->
         <section class="scam-list-table">
-            <div id="alert-check" class="alert alert-danger" role="alert">
-                <!-- Content here -->
-            </div>
-            <p class="fw-bold text-center">Danh sách kết quả kiểm tra</p>
-            <div class="table-responsive">
-                <table class="table table-bordered text-center">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Người bị tố cáo</th>
-                            <th>Số tiền</th>
-                            <th>SDT</th>
-                            <th>STK</th>
-                            <th>Ngân hàng</th>
-                            <th>Lượt xem</th>
-                            <th>Ngày</th>
-                        </tr>
-                    </thead>
-                    <tbody id="list-scammers">
-                        <!-- Data populated here -->
-                    </tbody>
-                </table>
+            <h1 class="text-center">Tố cáo Scam mới cập nhật</h1>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Người bị tố cáo</th>
+                        <th>Số tiền</th>
+                        <th>SDT</th>
+                        <th>STK</th>
+                        <th>Ngân hàng</th>
+                        <th>Lượt xem</th>
+                        <th>Ngày</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-list-scam">
+                    <!-- Content here -->
+                </tbody>
+            </table>
+            <div class="pagination">
+                <ul> <!--pages or li are comes from javascript --> </ul>
             </div>
         </section>
     </main>
@@ -81,22 +150,109 @@
     <footer class="text-center mt-5 py-3 bg-light">
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../assets/app.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const key = urlParams.get('key');
-        fillDataTableCheckPage(key);
+        fillDataTableCheckPage(key)
+        function getDataScamList(page) {
+            let tbody = document.getElementById("tbody-list-scam");
+            tbody.innerHTML = '';
+            getAllScams(page).then((listData) => {
+                listData.forEach(data => {
+                    let row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td class="font-weight-bold text-danger">${data.name}</td>
+                        <td class="text-danger">${data.money}</td>
+                        <td>${data.phone}</td>
+                        <td>${data.bankAccount}</td>
+                        <td>${data.bankName}</td>
+                        <td><i class="fas fa-eye"></i> ${data.viewCount} lượt xem</td>
+                        <td>${data.time}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+        };
 
         function checkClick() {
             var inputValue = document.getElementById("key-input").value;
 
-            if(!inputValue) {
+            if (!inputValue) {
                 alert("Vui lòng nhập thông tin!");
                 return;
             }
             window.location.href = "/check?key=" + inputValue;
         };
+
+        // selecting required element
+        const element = document.querySelector(".pagination ul");
+        let totalPages = 20;
+        let page = 1;
+
+        //calling function with passing parameters and adding inside element which is ul tag
+        element.innerHTML = createPagination(totalPages, page);
+        function createPagination(totalPages, page) {
+            getDataScamList(page);
+            let liTag = '';
+            let active;
+            let beforePage = page - 1;
+            let afterPage = page + 1;
+            if (page > 1) { //show the next button if the page value is greater than 1
+                liTag += `<li class="btn prev" onclick="createPagination(totalPages, ${page - 1})"><span><i class="fas fa-angle-left"></i></span></li>`;
+            }
+
+            if (page > 2) { //if page value is less than 2 then add 1 after the previous button
+                liTag += `<li class="first numb" onclick="createPagination(totalPages, 1)"><span>1</span></li>`;
+                if (page > 3) { //if page value is greater than 3 then add this (...) after the first li or page
+                    liTag += `<li class="dots"><span>...</span></li>`;
+                }
+            }
+
+            // how many pages or li show before the current li
+            if (page == totalPages) {
+                beforePage = beforePage - 2;
+            } else if (page == totalPages - 1) {
+                beforePage = beforePage - 1;
+            }
+            // how many pages or li show after the current li
+            if (page == 1) {
+                afterPage = afterPage + 2;
+            } else if (page == 2) {
+                afterPage = afterPage + 1;
+            }
+
+            for (var plength = beforePage; plength <= afterPage; plength++) {
+                if (plength > totalPages) { //if plength is greater than totalPage length then continue
+                    continue;
+                }
+                if (plength == 0) { //if plength is 0 than add +1 in plength value
+                    plength = plength + 1;
+                }
+                if (page == plength) { //if page is equal to plength than assign active string in the active variable
+                    active = "active";
+                } else { //else leave empty to the active variable
+                    active = "";
+                }
+                liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength})"><span>${plength}</span></li>`;
+            }
+
+            if (page < totalPages - 1) { //if page value is less than totalPage value by -1 then show the last li or page
+                if (page < totalPages - 2) { //if page value is less than totalPage value by -2 then add this (...) before the last li or page
+                    liTag += `<li class="dots"><span>...</span></li>`;
+                }
+                liTag += `<li class="last numb" onclick="createPagination(totalPages, ${totalPages})"><span>${totalPages}</span></li>`;
+            }
+
+            if (page < totalPages) { //show the next button if the page value is less than totalPage(20)
+                liTag += `<li class="btn next" onclick="createPagination(totalPages, ${page + 1})"><span> <i class="fas fa-angle-right"></i></span></li>`;
+            }
+            element.innerHTML = liTag; //add li tag inside ul tag
+            return liTag; //reurn the li tag
+        }
     </script>
 </body>
 

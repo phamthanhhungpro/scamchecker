@@ -29,7 +29,8 @@ footer p {
     line-height: 1.5;
 }
 
-.table th, .table td {
+.table th,
+.table td {
     vertical-align: middle;
 }
 
@@ -38,7 +39,9 @@ footer p {
 }
 
 @media (max-width: 768px) {
-    header .container, footer .container {
+
+    header .container,
+    footer .container {
         flex-direction: column;
         text-align: center;
     }
@@ -47,7 +50,7 @@ footer p {
         margin-top: 10px;
     }
 
-    footer .row > div {
+    footer .row>div {
         margin-bottom: 20px;
     }
 }
@@ -89,11 +92,10 @@ footer p {
     cursor: pointer;
 }
 
-.scam-list-table {
-}
+.scam-list-table {}
 
 .link-logo {
-    text-decoration: none!important;
+    text-decoration: none !important;
 }
 
 @media (max-width: 480px) {
@@ -134,4 +136,9 @@ footer p {
     .search-bar input {
         width: 50%;
     }
+}
+
+.eyeShowDetail:hover {
+    cursor: pointer;
+    color: #198754;
 }
