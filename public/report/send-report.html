@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TỐ CÁO SCAM</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">TỐ CÁO SCAM</h1>
+        <form id="reportForm" action="/submit" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="scammerName" class="font-weight-bold">Tên người lừa đảo <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="scammerName" name="scammerName" placeholder="Nguyen Van A" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="accountNumber" class="font-weight-bold">Số tài khoản lừa đảo <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="accountNumber" name="accountNumber" placeholder="0xxxx" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="bank" class="font-weight-bold">Ngân hàng <span class="text-danger">*</span></label>
+                    <select class="form-control" name="bank" id="bank">
+                        <option value="VCB">VIETCOMBANK</option>
+                        <option value="BIDV">BIDV</option>
+                        <option value="VTB">VIETINBANK</option>
+                        <option value="AGR">AGRIBANK</option>
+                        <option value="SAC">SACOMBANK</option>
+                        <option value="DAB">DONGABANK</option>
+                        <option value="VPBANK">VPBANK</option>
+                        <option value="TPBANK">TPBANK</option>
+                        <option value="EXIM">EXIM BANK</option>
+                        <option value="SEA">SEABANK</option>
+                        <option value="KIENLONGBANK">KIENLONGBANK</option>
+                        <option value="TCB">TECHCOMBANK</option>
+                        <option value="ABBANK">ABBANK</option>
+                        <option value="SAIGON">SAIGONBANK</option>
+                        <option value="MSB">MSB BANK</option>
+                        <option value="CIMB">CIMB BANK</option>
+                        <option value="VAB">VAB</option>
+                        <option value="VIB">VIB BANK</option>
+                        <option value="SCB">NGÂN HÀNG SÀI GÒN</option>
+                        <option value="CAKE">CAKE</option>
+                        <option value="IBK">IBK BANK</option>
+                        <option value="VRB">Ngân hàng Liên Doanh Việt-Nga</option>
+                        <option value="NASB">BAC A BANK</option>
+                        <option value="VIETCAP">VIETCAPITAL BANK</option>
+                        <option value="BVB">Ngân hàng TMCP Bản Việt</option>
+                        <option value="LPB">LienVietPost Bank</option>
+                        <option value="PVCOM">PVCOMBANK</option>
+                        <option value="OCEAN">OCEANBANK</option>
+                        <option value="GPB">GP BANK</option>
+                        <option value="NAMA">NAM Á BANK</option>
+                        <option value="HDB">HD Bank</option>
+                        <option value="OCB">OCB BANK</option>
+                        <option value="MHB">MHB BANK</option>
+                        <option value="NCB">Ngân Hàng Quốc Dân</option>
+                        <option value="ACB">Ngân Hàng Á CHÂU</option>
+                        <option value="VIETBANK">VIETBANK</option>
+                        <option value="Momo">Ví Momo</option>
+                        <option value="MB">MB BANK</option>
+                </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="amount" class="font-weight-bold">Số tiền chiếm đoạt (VND) <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="amount" name="amount" placeholder="0xxxx" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="website" class="font-weight-bold">Website/Facebook lừa đảo (nếu có)</label>
+                    <input type="url" class="form-control" id="website" name="website" placeholder="http://">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="phone" class="font-weight-bold">Số điện thoại lừa đảo</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="0xxxx">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="category" class="font-weight-bold">Danh mục <span class="text-danger">*</span></label>
+                    <select id="category" name="category" class="form-control" required>
+                        <option value="">-- Chọn danh mục --</option>
+                        <option value="2">Nick game</option>
+                        <option value="5">Đầu tư</option>
+                        <option value="6">Nội dung số</option>
+                        <option value="8">Tài khoản MXH</option>
+                        <option value="7">Sim số đẹp</option>
+                        <option value="9">Phần mềm</option>
+                        <option value="11">Đổi thẻ cào</option>
+                        <option value="10">Tiền ảo</option>
+                        <option value="1">Giao dịch trung gian</option>
+                        <option value="12">Bán hàng Online</option>
+                        <option value="13">Thẻ cào, game</option>
+                        <option value="15">Lừa đảo, cờ bạc</option>
+                        <option value="14">Dịch vụ khác</option>
+                    </select>
+                    
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="email" class="font-weight-bold">Email lừa đảo</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="xxx@xxx">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="upload" class="font-weight-bold">Upload Bill chuyển tiền & ảnh đoạn chat lừa đảo</label>
+                <input type="file" class="form-control-file" id="upload" name="uploadFiles" multiple>
+                <div id="fileList"></div>
+            </div>
+            <div class="form-group">
+                <label for="content" class="font-weight-bold">Nội dung tố cáo <span class="text-danger">*</span></label>
+                <textarea id="content" name="content" class="form-control" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="source" class="font-weight-bold">Link nguồn (nếu có)</label>
+                <input type="url" class="form-control" id="source" name="source">
+            </div>
+
+            <!-- New Section: NGƯỜI TỐ CÁO -->
+            <h2 class="text-center">NGƯỜI TỐ CÁO</h2>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="reporterName" class="font-weight-bold">Họ và tên <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="reporterName" name="reporterName" placeholder="Nhập họ tên bạn" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="reporterPhone" class="font-weight-bold">SDT <span class="text-danger">*</span></label>
+                    <input type="tel" class="form-control" id="reporterPhone" name="reporterPhone" placeholder="Nhập số điện thoại của bạn" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-danger btn-block">GỬI DUYỆT</button>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        document.getElementById('upload').addEventListener('change', function() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+
+            const fileNames = Array.from(this.files).map(file => file.name);
+            const uniqueFileNames = [...new Set(fileNames)]; 
+            uniqueFileNames.forEach(fileName => {
+                const listItem = document.createElement('div');
+                listItem.textContent = fileName;
+                fileList.appendChild(listItem);
+            });
+        });
+        document.getElementById('reportForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            // Debug form data
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+
+            fetch('/send-report', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert('Lưu thành công');
+                window.location.href = '/';
+            }).catch(error => {
+                console.error(error);
+                alert('Có lỗi xảy ra');
+            });
+        });
+    </script>
+</body>
+</html>

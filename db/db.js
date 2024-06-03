@@ -65,6 +65,10 @@ const Reports = sequelize.define('Reports', {
         defaultValue: 'pending',
         allowNull: false,
     },
+    uploadFiles: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: true,
+    },
 }, {
     timestamps: true, // Add createdAt and updatedAt fields
 });
