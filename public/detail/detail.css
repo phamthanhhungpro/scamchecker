@@ -7,19 +7,6 @@ body {
     font-weight: bold;
 }
 
-.evidence {
-    text-align: center;
-    display: inline;
-}
-
-.evidence img {
-    width: 100px;
-    height: auto;
-    border: 1px solid #ddd;
-    padding: 5px;
-    background-color: #fff;
-}
-
 .report-content {
     white-space: pre-line;
 }
