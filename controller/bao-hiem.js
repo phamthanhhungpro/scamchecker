@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { BaoHiem, User } = require('../models'); // Adjust the path as needed
+const { BaoHiem, User } = require('../db/db');
 
 router.post('/submit-insurance', async (req, res) => {
     try {
