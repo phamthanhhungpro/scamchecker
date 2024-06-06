@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
 // Login
 router.post('/login', async (req, res) => {
     const { input, password } = req.body;
-
+    console.log(input, password);
     // Find user
     const user = await User.findOne({ where: { $or: [{ email: input }, { phone: input }, { username: input }] } });
     if (!user) return res.status(400).send('Sai thông tin đăng nhập');

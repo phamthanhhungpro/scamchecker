@@ -121,7 +121,7 @@ const registerUser = async () => {
 }
 
 const login = async () => {
-    const emailOrPhone = document.getElementById('emailOrPhone').value;
+    const input = document.getElementById('emailOrPhone').value;
     const password = document.getElementById('password').value;
 
     const response = await fetch(`${endpointb}user/login`, {
@@ -129,7 +129,7 @@ const login = async () => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ emailOrPhone, password }),
+        body: JSON.stringify({ input, password }),
     });
 
     const data = await response.json();
@@ -207,15 +207,15 @@ const getProfileByEmailOrPhone = () => {
 
 
 // createBaoHiem
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('insuranceForm');
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault();
 
         // Collect form data
         const formData = new FormData(form);
         console.log(formData);
-        
+
         // Simple validation
         const requiredFields = ['fullName'];
         for (const field of requiredFields) {
@@ -239,19 +239,19 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify(data)
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Handle successful response
-            console.log('Success:', data);
-        })
-        .catch(error => {
-            // Handle error response
-            console.error('Error:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle successful response
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                // Handle error response
+                console.error('Error:', error);
+            });
     });
 });
