@@ -125,7 +125,12 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    emailOrPhone : {
+    email : {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    },
+    phone : {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -141,6 +146,35 @@ const User = sequelize.define('User', {
 },
 {
     timestamps: true,
+});
+
+// define table BaoHiem
+const BaoHiem = sequelize.define('BaoHiem', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    money: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    phone: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    bankAccount: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    bankName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 });
 
 const fs = require('fs');

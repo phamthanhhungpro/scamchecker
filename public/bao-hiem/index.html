@@ -53,66 +53,66 @@
     </header>
     <main class="container">
         <h2 class="text-center">ĐĂNG KÝ BẢO HIỂM</h2>
-        <form>
+        <form id="insuranceForm">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="fullName">Họ và tên *</label>
-                    <input type="text" class="form-control" id="fullName">
+                    <input type="text" class="form-control" id="fullName" name="fullName">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="phone">Số điện thoại *</label>
-                    <input type="text" class="form-control" id="phone" placeholder="">
+                    <input type="text" class="form-control" id="phone" name="phone" placeholder="">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="profilePicture">Ảnh đại diện *</label>
-                    <input type="file" class="form-control" id="profilePicture">
+                    <input type="file" class="form-control" id="profilePicture" name="profilePicture">
                     <small class="form-text text-muted">* Kích thước 152 x 152px</small>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="coverPhoto">Ảnh bìa</label>
-                    <input type="file" class="form-control" id="coverPhoto">
+                    <input type="file" class="form-control" id="coverPhoto" name="coverPhoto">
                     <small class="form-text text-muted">Kích thước 1120 x 373px</small>
                 </div>
             </div>
             <div class="form-group">
                 <label for="insurancePackage">Số tiền bảo hiểm *</label>
-                <input type="text" class="form-control" id="insurancePackage" placeholder="">
+                <input type="text" class="form-control" id="insurancePackage" name="insurancePackage" placeholder="">
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="website">Website</label>
-                    <input type="text" class="form-control" id="website">
+                    <input type="text" class="form-control" id="website" name="website">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="category">Danh mục</label>
-                    <input type="text" class="form-control" id="category">
+                    <input type="text" class="form-control" id="category" name="category">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="zalo">Zalo</label>
-                    <input type="text" class="form-control" id="zalo">
+                    <input type="text" class="form-control" id="zalo" name="zalo">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="facebook">Facebook</label>
-                    <input type="text" class="form-control" id="facebook">
+                    <input type="text" class="form-control" id="facebook" name="facebook">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="address">Địa chỉ</label>
-                    <input type="text" class="form-control" id="address">
+                    <input type="text" class="form-control" id="address" name="address">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="telegram">Telegram</label>
-                    <input type="text" class="form-control" id="telegram">
+                    <input type="text" class="form-control" id="telegram" name="telegram">
                 </div>
             </div>
             <div class="form-group">
                 <label for="introduction">Giới thiệu *</label>
-                <textarea class="form-control" id="introduction" rows="3"></textarea>
+                <textarea class="form-control" id="introduction" name="introduction" rows="3"></textarea>
             </div>
             <h5>Ngân hàng</h5>
             <div class="table-responsive">
@@ -156,8 +156,8 @@
                                     <option>VIETBANK</option>
                                     <option>VIETNAMPOST</option>
                                 </select>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" class="form-control" name="bankAccount"></td>
+                            <td><input type="text" class="form-control" name="accountHolder"></td>
                             <td><button type="button" class="btn btn-success">Thêm</button></td>
                         </tr>
                     </tbody>

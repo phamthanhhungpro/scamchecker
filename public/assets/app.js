@@ -204,3 +204,54 @@ const getProfileByEmailOrPhone = () => {
             console.error(error);
         });
 }
+
+
+// createBaoHiem
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('insuranceForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Collect form data
+        const formData = new FormData(form);
+        console.log(formData);
+        
+        // Simple validation
+        const requiredFields = ['fullName'];
+        for (const field of requiredFields) {
+            if (!formData.get(field)) {
+                alert(`Please fill in the ${field} field.`);
+                return;
+            }
+        }
+
+        // Convert form data to JSON object
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        // Send form data using fetch
+        fetch(`${endpointb}create-bao-hiem`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Handle successful response
+            console.log('Success:', data);
+        })
+        .catch(error => {
+            // Handle error response
+            console.error('Error:', error);
+        });
+    });
+});
