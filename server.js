@@ -217,52 +217,52 @@ app.get("/api/getScamDetail", async (req, res) => {
 
 app.post('/send-report', (req, res) => {
   upload(req, res, async (err) => {
-      if (err) {
-          console.error(err);
-          return res.status(500).send('Server Error');
-      }
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Server Error');
+    }
 
-      try {
-          const {
-              scammerName,
-              accountNumber,
-              bank,
-              amount,
-              website,
-              phone,
-              category,
-              email,
-              content,
-              source,
-              reporterName,
-              reporterPhone
-          } = req.body;
+    try {
+      const {
+        scammerName,
+        accountNumber,
+        bank,
+        amount,
+        website,
+        phone,
+        category,
+        email,
+        content,
+        source,
+        reporterName,
+        reporterPhone
+      } = req.body;
 
-          // Save file paths
-          const uploadFiles = req.files.map(file => file.path);
+      // Save file paths
+      const uploadFiles = req.files.map(file => file.path);
 
-          await Reports.create({
-              scammerName: scammerName,
-              accountNumber: accountNumber,
-              bank: bank,
-              amount: amount,
-              phone: phone,
-              website: website,
-              category: category,
-              email: email,
-              content: content,
-              source: source,
-              reporterName: reporterName,
-              reporterPhone: reporterPhone,
-              uploadFiles: uploadFiles,
-              date: new Date()
-          });
+      await Reports.create({
+        scammerName: scammerName,
+        accountNumber: accountNumber,
+        bank: bank,
+        amount: amount,
+        phone: phone,
+        website: website,
+        category: category,
+        email: email,
+        content: content,
+        source: source,
+        reporterName: reporterName,
+        reporterPhone: reporterPhone,
+        uploadFiles: uploadFiles,
+        date: new Date()
+      });
 
-          res.json({ success: true });
-      } catch (error) {
-          console.error(error);
-          res.status(500).json({ success: false, error: 'Server Error' });
-      }
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: 'Server Error' });
+    }
   });
 });
 
