@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User } = require('../db/db');
 const router = express.Router();
+const { Op } = require('sequelize');
 
 // Register
 router.post('/register', async (req, res) => {
@@ -24,9 +25,16 @@ router.post('/register', async (req, res) => {
 // Login
 router.post('/login', async (req, res) => {
     const { input, password } = req.body;
-    console.log(input, password);
     // Find user
-    const user = await User.findOne({ where: { $or: [{ email: input }, { phone: input }, { username: input }] } });
+    const user = await User.findOne({
+        where: {
+            [Op.or]: [
+                { email: input },
+                { phone: input },
+                { username: input }
+            ]
+        }
+    });
     if (!user) return res.status(400).send('Sai thông tin đăng nhập');
 
     // Check password
