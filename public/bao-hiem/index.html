@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+    <title>Đăng Ký Bảo Hiểm</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/styles.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .btn-submit {
+            margin-top: 20px;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="border-bottom mb-3">
+        <div class="container d-flex justify-content-between align-items-center py-2">
+            <div class="logo">
+                <a class="link-logo" href="/">
+                    <img src="../assets/logo.png" alt="CheckScam">
+                    <span>TỰ TIN GIAO DỊCH</span>
+                </a>
+            </div>
+            <nav>
+                <a href="#" class="mx-2 text-dark">Quỹ bảo hiểm</a>
+                <a href="#" class="mx-2 text-dark">Scammer</a>
+                <a href="#" class="mx-2 text-dark">Trung gian</a>
+                <a href="#" class="mx-2 text-dark">Tin tức</a>
+            </nav>
+            <div>
+                <button class="btn btn-danger mx-1">Tố cáo</button>
+                <button id="account-button" class="btn btn-secondary mx-1">
+                    <!-- js generator -->
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="container">
+        <h2 class="text-center">ĐĂNG KÝ BẢO HIỂM</h2>
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="fullName">Họ và tên *</label>
+                    <input type="text" class="form-control" id="fullName">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="phone">Số điện thoại *</label>
+                    <input type="text" class="form-control" id="phone" placeholder="">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="profilePicture">Ảnh đại diện *</label>
+                    <input type="file" class="form-control" id="profilePicture">
+                    <small class="form-text text-muted">* Kích thước 152 x 152px</small>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="coverPhoto">Ảnh bìa</label>
+                    <input type="file" class="form-control" id="coverPhoto">
+                    <small class="form-text text-muted">Kích thước 1120 x 373px</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="insurancePackage">Số tiền bảo hiểm *</label>
+                <input type="text" class="form-control" id="insurancePackage" placeholder="">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="website">Website</label>
+                    <input type="text" class="form-control" id="website">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="category">Danh mục</label>
+                    <input type="text" class="form-control" id="category">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="zalo">Zalo</label>
+                    <input type="text" class="form-control" id="zalo">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="facebook">Facebook</label>
+                    <input type="text" class="form-control" id="facebook">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="address">Địa chỉ</label>
+                    <input type="text" class="form-control" id="address">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="telegram">Telegram</label>
+                    <input type="text" class="form-control" id="telegram">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="introduction">Giới thiệu *</label>
+                <textarea class="form-control" id="introduction" rows="3"></textarea>
+            </div>
+            <h5>Ngân hàng</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Ngân hàng</th>
+                            <th>STK</th>
+                            <th>Chủ tài khoản</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select class="form-control">
+                                    <option selected>VIETCOMBANK</option>
+                                    <option>ACB</option>
+                                    <option>BIDV</option>
+                                    <option>VPBANK</option>
+                                    <option>TECHCOMBANK</option>
+                                    <option>MBBANK</option>
+                                    <option>AGRIBANK</option>
+                                    <option>SCB</option>
+                                    <option>OCB</option>
+                                    <option>TPBANK</option>
+                                    <option>EXIMBANK</option>
+                                    <option>SHB</option>
+                                    <option>NCB</option>
+                                    <option>VIB</option>
+                                    <option>SEABANK</option>
+                                    <option>MSB</option>
+                                    <option>PVCOMBANK</option>
+                                    <option>SAIGONBANK</option>
+                                    <option>OCB</option>
+                                    <option>GPBANK</option>
+                                    <option>VIETCAPITALBANK</option>
+                                    <option>VIETBANK</option>
+                                    <option>VIETINBANK</option>
+                                    <option>VIETABANK</option>
+                                    <option>VIETBANK</option>
+                                    <option>VIETNAMPOST</option>
+                                </select>
+                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" class="form-control"></td>
+                            <td><button type="button" class="btn btn-success">Thêm</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-submit">GỬI DUYỆT</button>
+
+            </div>
+    </main>
+    <!-- Footer -->
+    <footer class="text-center mt-5 py-3 bg-light">
+    </footer>
+
+    <script src="../assets/app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

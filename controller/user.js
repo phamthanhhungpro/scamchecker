@@ -38,12 +38,14 @@ router.post('/login', async (req, res) => {
     res.header('Authorization', token).send({ token: token, emailOrPhone: user.emailOrPhone, role: user.role });
 });
 
-// get user info by id
-router.get('/:id', async (req, res) => {
-    const user = await User.findByPk(req.params.id);
+// get user info by emailOrPhone
+router.get('/info', async (req, res) => {
+    const { emailOrPhone } = req.query;
+    const user = await User.findOne({ where: { emailOrPhone: emailOrPhone } });
     if (!user) return res.status(400).send('User not found');
     res.send(user);
 });
+
 
 // edit user password
 router.put('/password', async (req, res) => {
