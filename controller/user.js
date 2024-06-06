@@ -43,7 +43,7 @@ router.post('/login', async (req, res) => {
 
     // Create and assign a token
     const token = jwt.sign({ id: user.id, role: user.role }, 'jhyatwtwfaftw23@333');
-    res.header('Authorization', token).send({ token: token, email: user.email, phone: user.phone, username: user.username, role: user.role, userId: user.id});
+    res.header('Authorization', token).send({ token: token, email: user.email, phone: user.phone, username: user.username, role: user.role, userId: user.id });
 });
 
 // get user info by username

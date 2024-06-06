@@ -137,7 +137,7 @@ const login = async () => {
     if (response.ok) {
         alert('Đăng nhập thành công!');
         localStorage.setItem('token', data.token);
-        localStorage.setItem('emailOrPhone', data.emailOrPhone);
+        localStorage.setItem('username', data.username);
         localStorage.setItem('role', data.role);
 
         window.location.href = '/';
@@ -148,7 +148,7 @@ const login = async () => {
 
 const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('emailOrPhone');
+    localStorage.removeItem('username');
     localStorage.removeItem('role');
     window.location.href = '/account/login';
 }
@@ -192,11 +192,11 @@ function gotoBaoHiem() {
     window.location.href = "/bao-hiem";
 }
 
-const getProfileByEmailOrPhone = () => {
-    let emailOrPhone = localStorage.getItem('emailOrPhone');
+const getProfileByUsername = () => {
+    let username = localStorage.getItem('username');
     // Make an API request with the query parameter
     // and handle the response
-    return fetch(`${endpointb}user/info?emailOrPhone=${emailOrPhone}`)
+    return fetch(`${endpointb}user/info?username=${username}`)
         .then(response => response.json())
         .then(data => { return data; })
         .catch(error => {
@@ -205,6 +205,22 @@ const getProfileByEmailOrPhone = () => {
         });
 }
 
+const updateProfileAPI = async (dataProfile) => {
+    const response = await fetch(`${endpointb}user/info`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataProfile),
+    });
+
+    if (response.ok) {
+        alert('Cập nhật thông tin thành công!');
+        window.location.reload();
+    } else {
+        alert('Có lỗi xảy ra!');
+    }
+}
 
 // createBaoHiem
 document.addEventListener('DOMContentLoaded', function () {
@@ -215,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Collect form data
         const formData = new FormData(form);
         let userId = localStorage.getItem('userId');
-        formData.append('userId', userId);        
+        formData.append('userId', userId);
         // Simple validation
         const requiredFields = ['fullName'];
         for (const field of requiredFields) {

@@ -63,24 +63,23 @@
                 <h2 class="card-title">Sửa thông tin tài khoản</h2>
             </div>
             <div class="card-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Tên đăng nhập</label>
-                        <input type="text" class="form-control" id="username" value="nam98vp" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="fullname" class="form-label">Họ và tên</label>
-                        <input type="text" class="form-control" id="fullname" value="Nguyễn Huy Hoài Nam">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" value="nam98vp@gmail.com">
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control" id="phone">
-                    </div>
-                    <!-- <div class="mb-3">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Tên đăng nhập</label>
+                    <input type="text" class="form-control" id="user-name" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="fullname" class="form-label">Họ và tên</label>
+                    <input type="text" class="form-control" id="full-name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Số điện thoại</label>
+                    <input type="text" class="form-control" id="phone">
+                </div>
+                <!-- <div class="mb-3">
                         <label class="form-label">Giới tính</label><br>
                         <input type="radio" id="male" name="gender" value="male">
                         <label for="male">Nam</label><br>
@@ -102,17 +101,16 @@
                     <div class="mb-3">
                         <label for="country" class="form-label">Quốc gia</label>
                         <input type="text" class="form-control" id="country" value="Vietnam">
-                    </div> -->
+                    </div>
                     <div class="mb-3">
                         <label for="secondaryPassword" class="form-label">Mật khẩu cấp 2</label>
                         <input type="password" class="form-control" id="secondaryPassword">
-                    </div>
-                    <div class="mb-3">
-                        <label for="avatar" class="form-label">Avatar</label>
-                        <input type="file" class="form-control-file" id="avatar">
-                    </div>
-                    <button type="submit" class="btn btn-success">Cập nhật thông tin</button>
-                </form>
+                    </div> -->
+                <div class="mb-3">
+                    <label for="avatar" class="form-label">Avatar</label>
+                    <input type="file" class="form-control-file" id="avatar">
+                </div>
+                <button onclick="updateProfile()" class="btn btn-success">Cập nhật thông tin</button>
             </div>
         </div>
     </main>
@@ -126,6 +124,26 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../../assets/app.js"></script>
     <script>
+        // Call the function get data profile
+        function setDataProfile() {
+            getProfileByUsername().then(data => {
+                $('#user-name').val(data.username);
+                $('#full-name').val(data.fullName);
+                $('#email').val(data.email);
+                $('#phone').val(data.phone);
+            });
+        }
+        setDataProfile();
+
+        function updateProfile() {
+            var data = {
+                fullName: $('#full-name').val(),
+                email: $('#email').val(),
+                phone: $('#phone').val(),
+                username: $('#user-name').val()
+            };
+            updateProfileAPI(data);
+        }
     </script>
 </body>
 
