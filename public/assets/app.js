@@ -98,7 +98,8 @@ const gotoDetail = (link) => {
 const registerUser = async () => {
     const username = document.getElementById('username').value;
     const fullName = document.getElementById('fullname').value;
-    const emailOrPhone = document.getElementById('emailOrPhone').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
     const password = document.getElementById('password').value;
 
     const response = await fetch(`${endpointb}user/register`, {
@@ -106,7 +107,7 @@ const registerUser = async () => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password, fullName, emailOrPhone }),
+        body: JSON.stringify({ username, password, fullName, email, phone }),
     });
 
     const data = await response.json();
@@ -189,4 +190,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function gotoBaoHiem() {
     window.location.href = "/bao-hiem";
+}
+
+const getProfileByEmailOrPhone = () => {
+    let emailOrPhone = localStorage.getItem('emailOrPhone');
+    // Make an API request with the query parameter
+    // and handle the response
+    return fetch(`${endpointb}user/info?emailOrPhone=${emailOrPhone}`)
+        .then(response => response.json())
+        .then(data => { return data; })
+        .catch(error => {
+            // Handle any errors that occur during the request
+            console.error(error);
+        });
 }
