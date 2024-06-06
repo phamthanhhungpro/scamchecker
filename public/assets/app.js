@@ -214,8 +214,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Collect form data
         const formData = new FormData(form);
-        console.log(formData);
-
+        let userId = localStorage.getItem('userId');
+        formData.append('userId', userId);        
         // Simple validation
         const requiredFields = ['fullName'];
         for (const field of requiredFields) {

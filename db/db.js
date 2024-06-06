@@ -116,6 +116,11 @@ const Scammers = sequelize.define('Scammers', {
 });
 
 const User = sequelize.define('User', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -155,11 +160,7 @@ const BaoHiem = sequelize.define('BaoHiem', {
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    money: {
+    fullName: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -167,14 +168,69 @@ const BaoHiem = sequelize.define('BaoHiem', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    bankAccount: {
+    profilePicture: {
+        type: DataTypes.STRING, // Assuming you'll store the file path
+        allowNull: false,
+    },
+    coverPhoto: {
+        type: DataTypes.STRING, // Assuming you'll store the file path
+    },
+    insurancePackage: {
         type: DataTypes.STRING,
+        allowNull: false,
+    },
+    website: {
+        type: DataTypes.STRING,
+    },
+    category: {
+        type: DataTypes.STRING,
+    },
+    zalo: {
+        type: DataTypes.STRING,
+    },
+    facebook: {
+        type: DataTypes.STRING,
+    },
+    address: {
+        type: DataTypes.STRING,
+    },
+    telegram: {
+        type: DataTypes.STRING,
+    },
+    introduction: {
+        type: DataTypes.TEXT,
         allowNull: false,
     },
     bankName: {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    bankAccount: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    accountHolder: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Users', // The table name
+            key: 'id',
+        },
+    },
+});
+
+User.hasOne(BaoHiem, {
+    foreignKey: 'userId',
+    as: 'baohiem',
+});
+
+BaoHiem.belongsTo(User, {
+    foreignKey: 'userId',
+    as: 'user',
 });
 
 const fs = require('fs');
@@ -196,14 +252,13 @@ const initializeDatabase = async () => {
     try {
         await sequelize.authenticate();
         appendToFile(`Connection to PostgreSQL has been established successfully.`);
-        await Reports.sync({ alter: true });
-        await Scammers.sync({ alter: true });
-        await User.sync({ alter: true });
+        sequelize.sync({ force: false }).then(() => {
+            console.log('Database & tables created!');
+        });
 
-        console.log('Reports table has been synchronized.');
     } catch (error) {
         appendToFile('Unable to connect to the database or synchronize the table:', error.message);
     }
 };
 
-module.exports = { sequelize, Reports, Scammers, User, initializeDatabase };
+module.exports = { sequelize, Reports, Scammers, User, BaoHiem, initializeDatabase };

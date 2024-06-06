@@ -9,6 +9,8 @@ const bodyParser = require('body-parser');
 const { Op } = require('sequelize');
 const upload = require('./db/multer.js');
 const userRoutes = require('./controller/user.js');
+const baohiemRoutes = require('./controller/bao-hiem.js');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,6 +30,7 @@ app.get("/ping", (req, res) => {
 });
 
 app.use('/api/user', userRoutes);
+app.use('/api/baohiem', baohiemRoutes);
 
 // Define a route for scraping data
 app.get("/api/check", async (req, res) => {
