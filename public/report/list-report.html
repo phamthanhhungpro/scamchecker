@@ -115,10 +115,9 @@
                 <input id="key-input" type="text" placeholder="Nhập SĐT, Email hoặc Số tài khoản để kiểm tra...">
                 <button class="search-button" onclick="checkClick()">Check</button>
             </div>
-            <div class="text-center" style="padding: 10px"><a href="https://checkscam.com/posts/to-cao-scam"><button
-                        class="btn btn-danger" style="margin-right: 10px"><i class="fal fa-exclamation-triangle"></i>
-                        Gửi tố cáo</button></a><a href="https://checkscam.com/trusted">
-                    <button class="btn btn-success"><i class="fa fa-check-circle"></i> Quỹ bảo hiểm</button></a></div>
+            <div class="text-center" style="padding: 10px">
+                <a href = "/report/send-report.html"><button class="btn btn-danger" style="margin-right: 10px">Gửi tố cáo</button></a>
+                <a href="https://checkscam.com/trusted"><button class="btn btn-success"><i class="fa fa-check-circle"></i> Quỹ bảo hiểm</button></a></div>
         </section>
 
         <!-- Table Section -->
@@ -132,12 +131,11 @@
                         <th>SDT</th>
                         <th>STK</th>
                         <th>Ngân hàng</th>
-                        <th>Lượt xem</th>
-                        <th>Ngày</th>
+                        <th>Ngày tạo</th>
                         <th>Xem</th>
                     </tr>
                 </thead>
-                <tbody id="tbody-list-scam">
+                <tbody id="tbody-list-report">
                     <!-- Content here -->
                 </tbody>
             </table>
@@ -159,37 +157,39 @@
         const urlParams = new URLSearchParams(window.location.search);
         const key = urlParams.get('key');
         fillDataTableCheckPage(key)
-        function getDataScamList(page) {
-            let tbody = document.getElementById("tbody-list-scam");
+        function getDataReportList(page) {
+            let tbody = document.getElementById("tbody-list-report");
             tbody.innerHTML = '';
-            getAllScams(page).then((listData) => {
-                listData.forEach(data => {
+            getAllReports(page).then((listData) => {
+                listData.data.forEach(data => {
                     let row = document.createElement("tr");
                     row.innerHTML = `
-                        <td class="font-weight-bold text-danger">${data.name}</td>
-                        <td class="text-danger">${data.money}</td>
+                        <td class="font-weight-bold text-danger">${data.scammerName}</td>
+                        <td class="text-danger">${data.amount}</td>
                         <td>${data.phone}</td>
-                        <td>${data.bankAccount}</td>
-                        <td>${data.bankName}</td>
-                        <td><i class="fas fa-eye"></i> ${data.viewCount} lượt xem</td>
-                        <td>${data.time}</td>
+                        <td>${data.accountNumber}</td>
+                        <td>${data.bank}</td>
+                        <td>${data.createdAt}</td>
                     `;
                     let td = document.createElement("td");
                     td.innerHTML = `<i class="fa-sharp fa-solid fa-eye eyeShowDetail"></i>`;
-                    if (data.isCrawled == true) {
-                        td.addEventListener("click", () => {
-                        gotoDetail(data.link);
+                    td.addEventListener("click", () => {
+                        gotoReportDetail(data.id);
                     });
-                    } else {
-                        td.addEventListener("click", () => {
-                        gotoDetailWithId(data.id);
-                    });
-                    } 
-
                     row.appendChild(td);
                     tbody.appendChild(row);
                 });
             })
+        };
+
+        function checkClick() {
+            var inputValue = document.getElementById("key-input").value;
+
+            if (!inputValue) {
+                alert("Vui lòng nhập thông tin!");
+                return;
+            }
+            window.location.href = "/check?key=" + inputValue;
         };
 
         function checkClick() {
@@ -210,7 +210,7 @@
         //calling function with passing parameters and adding inside element which is ul tag
         element.innerHTML = createPagination(totalPages, page);
         function createPagination(totalPages, page) {
-            getDataScamList(page);
+            getDataReportList(page);
             let liTag = '';
             let active;
             let beforePage = page - 1;
@@ -267,6 +267,7 @@
             element.innerHTML = liTag; //add li tag inside ul tag
             return liTag; //reurn the li tag
         }
+
     </script>
 </body>
 

@@ -4,13 +4,12 @@ const role = require('./middlewares/role');
 const axios = require("axios");
 const cheerio = require("cheerio");
 const cors = require('cors');
-const { initializeDatabase, Reports, Scammers } = require('./db/db.js');
+const { initializeDatabase, Reports, Scammers, sequelize } = require('./db/db.js');
 const bodyParser = require('body-parser');
 const { Op } = require('sequelize');
 const upload = require('./db/multer.js');
 const userRoutes = require('./controller/user.js');
 const baohiemRoutes = require('./controller/bao-hiem.js');
-
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -126,7 +125,7 @@ app.get("/api/getAllScams", async (req, res) => {
     const scamSelector = "[class=scam-card]";
 
     // Extract data from the HTML
-    const scams = [];
+    const scams = await Scammers.findAll();
     $(scamSelector).each((index, element) => {
       let name = $(element).find(".limit").text().trim();
       let money = $(element).find(".scam-price").text().trim();
@@ -148,7 +147,6 @@ app.get("/api/getAllScams", async (req, res) => {
         link,
       });
     });
-
     res.json(scams);
   } catch (error) {
     console.error(error);
@@ -218,6 +216,22 @@ app.get("/api/getScamDetail", async (req, res) => {
   }
 });
 
+app.get('/api/getScammerDetailById', async (req, res) => {
+  const id = req.query.id;
+
+  try {
+    const user = await Scammers.findByPk(id);
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).send('Report not found');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
 app.post('/send-report', (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
@@ -269,6 +283,44 @@ app.post('/send-report', (req, res) => {
   });
 });
 
+app.get('/api/getAllReports', async (req, res) => {
+  const { page = 1, limit = 10 } = req.query;
+  const offset = (page - 1) * limit;
+
+  try {
+    const { count, rows } = await Reports.findAndCountAll({
+      limit: parseInt(limit, 10),
+      offset: parseInt(offset, 10),
+    });
+
+    res.status(200).json({
+      total: count,
+      page: parseInt(page, 10),
+      limit: parseInt(limit, 10),
+      data: rows,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
+app.get('/api/getReportDetail', async (req, res) => {
+  const id = req.query.id;
+
+  try {
+    const user = await Reports.findByPk(id);
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).send('Report not found');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
 // Example protected route
 app.get('/admin', auth, role(['admin']), (req, res) => {
   res.send('Admin content');
@@ -281,3 +333,40 @@ initializeDatabase()
       console.log(`Server is running on port ${PORT}`);
     });
   });
+
+app.post('/api/approveReport', async (req, res) => {
+  const reportId = req.body.id;
+
+  const transaction = await sequelize.transaction();
+
+  try {
+    const report = await Reports.findOne({ where: { id: reportId }, transaction });
+    if (!report) {
+      throw new Error('Report not found');
+    }
+
+    report.status = 'approved';
+    await report.save({ transaction });
+
+    await Scammers.create({
+      name: report.scammerName,
+      money: report.amount.toString(),
+      phone: report.phone,
+      bankAccount: report.accountNumber,
+      bankName: report.bank,
+      viewCount: '0',
+      time: new Date().toISOString(),
+      link: report.website || '',
+      isCrawled: false
+    }, { transaction });
+
+    await transaction.commit();
+
+    res.status(200).json({ message: 'Report approved and scam record added' });
+  } catch (err) {
+    await transaction.rollback();
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
