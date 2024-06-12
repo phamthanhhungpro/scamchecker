@@ -111,6 +111,10 @@ const Scammers = sequelize.define('Scammers', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    isCrawled: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true
+    }
 }, {
     timestamps: true,
 });

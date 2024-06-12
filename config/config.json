@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "logstore",
+    "password": "Logstore@1331",
+    "database": "scamchecker",
+    "host": "46.250.224.140",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "logstore",
+    "password": "Logstore@1331",
+    "database": "scamchecker_test",
+    "host": "46.250.224.140",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "logstore",
+    "password": "Logstore@1331",
+    "database": "scamchecker",
+    "host": "46.250.224.140",
+    "port": 5432,
+    "dialect": "postgres"
+  }
+}
