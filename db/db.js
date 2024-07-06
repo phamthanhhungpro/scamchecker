@@ -111,6 +111,10 @@ const Scammers = sequelize.define('Scammers', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    isCrawled: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true
+    }
 }, {
     timestamps: true,
 });
@@ -169,11 +173,11 @@ const BaoHiem = sequelize.define('BaoHiem', {
         allowNull: false,
     },
     profilePicture: {
-        type: DataTypes.STRING, // Assuming you'll store the file path
+        type: DataTypes.TEXT('long'), // Store image as base64 string
         allowNull: false,
     },
     coverPhoto: {
-        type: DataTypes.STRING, // Assuming you'll store the file path
+        type: DataTypes.TEXT('long'), // Store image as base64 string
     },
     insurancePackage: {
         type: DataTypes.STRING,
@@ -211,6 +215,11 @@ const BaoHiem = sequelize.define('BaoHiem', {
     },
     accountHolder: {
         type: DataTypes.STRING,
+        allowNull: false,
+    },
+    status: {
+        type: DataTypes.ENUM('pending', 'approved', 'rejected'),
+        defaultValue: 'pending',
         allowNull: false,
     },
     userId: {

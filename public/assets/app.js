@@ -32,9 +32,15 @@ const fillDataTableHomepage = () => {
                 `;
                 let td = document.createElement("td");
                 td.innerHTML = `<i class="fa-sharp fa-solid fa-eye eyeShowDetail"></i>`;
-                td.addEventListener("click", () => {
+                if (scammer.isCrawled == true) {
+                    td.addEventListener("click", () => {
                     gotoDetail(scammer.link);
                 });
+                } else {
+                    td.addEventListener("click", () => {
+                    gotoDetailWithId(scammer.id);
+                });
+                } 
                 row.appendChild(td);
                 document.getElementById("list-scammers").appendChild(row);
             });
@@ -89,10 +95,23 @@ const getDetailScammer = (id) => {
         });
 };
 
+const getDetailScammerWithId = (id) => {
+    return fetch(`${endpointb}getScammerDetailById?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        });
+};
+
 const gotoDetail = (link) => {
     const linkParts = link.split("/");
     const extractedLink = linkParts[linkParts.length - 1].replace(".html", "");
     window.location.href = `/detail?link=${extractedLink}`;
+};
+
+
+const gotoDetailWithId = (id) => {
+    window.location.href = `/detail?id=${id}`;
 };
 
 const registerUser = async () => {
@@ -282,3 +301,42 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
+
+
+//Get all reports
+const getAllReports = (page) => {
+    return fetch(`${endpointb}getAllReports?page=${page}`)
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        });
+};
+
+const getDetailReport = (id) => {
+    return fetch(`${endpointb}getReportDetail?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        });
+}
+
+
+const gotoReportDetail = (id) => {
+    window.location.href = `/report/report-detail.html?id=${id}`;
+};
+
+const approveReport = async (id) => {
+    const response = await fetch('http://localhost:3000/api/approveReport', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id }),
+        });
+
+        if (!response.ok) {
+            alert('Có lỗi xảy ra!');
+        } else {
+            alert('Phê duyệt thành công');
+        }
+}

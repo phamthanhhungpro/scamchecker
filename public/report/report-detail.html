@@ -124,8 +124,14 @@
                     <span>TỰ TIN GIAO DỊCH</span>
                 </a>
             </div>
-
+            <nav>
+                <a href="#" class="mx-2 text-dark">Quỹ bảo hiểm</a>
+                <a href="#" class="mx-2 text-dark">Scammer</a>
+                <a href="#" class="mx-2 text-dark">Trung gian</a>
+                <a href="#" class="mx-2 text-dark">Tin tức</a>
+            </nav>
             <div>
+                <button class="btn btn-danger mx-1">Tố cáo</button>
                 <button id="account-button" class="btn btn-secondary mx-1">
                     <!-- js generator -->
                 </button>
@@ -138,11 +144,16 @@
         <!-- Search Section -->
         <section class="text-center mb-4">
             <h2 class="fw-bold text-success">KIỂM TRA SCAMMER</h2>
-
+            <p>Hiện có 35.596 stk, sdt & 4.284 fb lừa đảo, 2.087 bình luận, 64 tố cáo đang chờ duyệt.<br> Sẽ giúp bạn
+                mua bán an toàn hơn khi online !!!</p>
             <div class="search-bar">
                 <input id="key-input" type="text" placeholder="Nhập SĐT, Email hoặc Số tài khoản để kiểm tra...">
-                <button class="search-button" onclick="checkClick()">Kiểm tra</button>
+                <button class="search-button" onclick="checkClick()">Check</button>
             </div>
+            <div class="text-center" style="padding: 10px"><a href="/report"><button class="btn btn-danger"
+                        style="margin-right: 10px"><i class="fal fa-exclamation-triangle"></i>
+                        Gửi tố cáo</button></a><a href="https://checkscam.com/trusted">
+                    <button class="btn btn-success"><i class="fa fa-check-circle"></i> Quỹ bảo hiểm</button></a></div>
         </section>
 
         <!-- Table Section -->
@@ -182,6 +193,13 @@
                                             <i class="fas fa-exclamation-triangle me-1"></i>Yêu cầu gỡ
                                         </a>
                                     </div>
+                                </div>
+                                <div class="text-center" style="padding: 10px">
+                                    <button class="btn btn-success" onclick="approve()"><i class="fa fa-check-circle"
+                                            ></i> Phê duyệt</button>
+                                    <button class="btn btn-danger" style="margin-right: 10px"
+                                        onclick="reject()"><i class="fal fa-exclamation-triangle"></i>Từ
+                                        chối</button>
                                 </div>
                             </div>
                         </div>
@@ -256,28 +274,20 @@
             // Your custom options
         });
         const urlParams = new URLSearchParams(window.location.search);
-        const link = urlParams.get('link');
-        if (link != null) {
-            getDetailScammerData();
-        }
-
         const id = urlParams.get('id');
-        if (id != null) {
-            getDetailScammerDataWithId();
-        }
-
-        function getDetailScammerData() {
-            getDetailScammer(link).then((data) => {
+        getDetailReportData();
+        function getDetailReportData() {
+            getDetailReport(id).then((data) => {
                 console.log(data);
-                document.getElementById("scammer-name").innerText = data.name;
-                document.getElementById("scammer-bank-account").innerText = data.bankAccount;
-                document.getElementById("scammer-bank-name").innerText = data.bankName;
-                document.getElementById("scammer-money").innerText = data.money;
+                document.getElementById("scammer-name").innerText = data.scammerName;
+                document.getElementById("scammer-bank-account").innerText = data.accountNumber;
+                document.getElementById("scammer-bank-name").innerText = data.bank;
+                document.getElementById("scammer-money").innerText = data.amount;
                 document.getElementById("scammer-type").innerText = data.type;
                 document.getElementById("report-content").innerText = data.content;
                 let div = document.getElementById("image-report");
                 div.innerHTML = "";
-                data.imageUrls.forEach((url) => {
+                data.uploadFiles.forEach((url) => {
                     let content = `
                     <a href="${url}" data-fancybox="scammer-images" aria-label="Xem chi tiết" class="initFancybox hstack information-item_image">
                     <div class="ratio ratio-1x1">
@@ -289,35 +299,6 @@
                 document.getElementById("reporter-name").innerText = data.reporterName;
                 document.getElementById("reporter-phone").innerText = data.reporterPhone;
                 document.getElementById("reporter-reputation").innerText = data.reporterReputation;
-                document.getElementById("report-count").innerText = data.reportCount;
-                document.getElementById("joinDate").innerText = data.joinDate;
-            });
-        }
-
-        function getDetailScammerDataWithId() {
-            getDetailScammerWithId(id).then((data) => {
-                console.log(data);
-                document.getElementById("scammer-name").innerText = data.name;
-                document.getElementById("scammer-bank-account").innerText = data.bankAccount;
-                document.getElementById("scammer-bank-name").innerText = data.bankName;
-                document.getElementById("scammer-money").innerText = data.money;
-                document.getElementById("scammer-type").innerText = data.type;
-                document.getElementById("report-content").innerText = data.content;
-                let div = document.getElementById("image-report");
-                div.innerHTML = "";
-                data.imageUrls.forEach((url) => {
-                    let content = `
-                    <a href="${url}" data-fancybox="scammer-images" aria-label="Xem chi tiết" class="initFancybox hstack information-item_image">
-                    <div class="ratio ratio-1x1">
-                        <img src="${url}" class="img-fluid" alt="">
-                    </div>`;
-                    div.innerHTML += content;
-                });
-
-                document.getElementById("reporter-name").innerText = data.reporterName;
-                document.getElementById("reporter-phone").innerText = data.reporterPhone;
-                document.getElementById("reporter-reputation").innerText = data.reporterReputation;
-                document.getElementById("report-count").innerText = data.reportCount;
                 document.getElementById("joinDate").innerText = data.joinDate;
             });
         }
@@ -331,6 +312,10 @@
             }
             window.location.href = "/check?key=" + inputValue;
         };
+
+        function approve() {
+            approveReport(id);
+        }
     </script>
 </body>
 
