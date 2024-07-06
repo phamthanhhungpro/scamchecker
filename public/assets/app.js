@@ -166,16 +166,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/account/profile">Thông tin tài khoản</a>
-                    <a class="dropdown-item" href="/bao-hiem">Đăng ký GDV/Bảo hiểm</a>
-                    <a class="dropdown-item" href="#">Trung gian</a>
                     <a class="dropdown-item" href="#" id="logout">Đăng xuất</a>
                 </div>
             </div>
         `;
 
+        if (localStorage.getItem('role') === 'ADMIN') {
+            console.log('Admin logged in');
+            // add more menu to dropdown
+            const dropdown = document.querySelector('.dropdown-menu');
+            const adminMenu = document.createElement('a');
+            adminMenu.classList.add('dropdown-item');
+            adminMenu.href = '/phe-duyet-to-cao';
+            adminMenu.innerText = 'Phê duyệt tố cáo';
+            dropdown.appendChild(adminMenu);
+        }
+
         document.getElementById('logout').addEventListener('click', () => {
             localStorage.removeItem('token');
             localStorage.removeItem('role');
+            localStorage.removeItem('username');
+
 
             window.location.reload(); // Reload the page to show the Login button
         });

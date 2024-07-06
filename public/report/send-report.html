@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TỐ CÁO SCAM</title>
+    <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+
+    <title>Gửi tố cáo lừa đảo</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -158,21 +160,14 @@
 
             const formData = new FormData(this);
 
-            // Debug form data
-            for (let [key, value] of formData.entries()) {
-                console.log(`${key}: ${value}`);
-            }
-
             fetch('/send-report', {
                 method: 'POST',
                 body: formData
             }).then(response => response.json())
             .then(data => {
-                console.log(data);
-                alert('Lưu thành công');
+                alert('Gửi tố cáo thành công! Chúng tôi sẽ kiểm tra và cập nhật sớm nhất!');
                 window.location.href = '/';
             }).catch(error => {
-                console.error(error);
                 alert('Có lỗi xảy ra');
             });
         });

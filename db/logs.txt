@@ -38,3 +38,5 @@ Connection to PostgreSQL has been established successfully.
 Connection to PostgreSQL has been established successfully.
 Connection to PostgreSQL has been established successfully.
 Connection to PostgreSQL has been established successfully.
+Connection to PostgreSQL has been established successfully.
+Connection to PostgreSQL has been established successfully.
