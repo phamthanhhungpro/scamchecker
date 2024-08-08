@@ -147,13 +147,12 @@
             const fileList = document.getElementById('fileList');
             fileList.innerHTML = '';
 
-            const fileNames = Array.from(this.files).map(file => file.name);
-            const uniqueFileNames = [...new Set(fileNames)]; 
-            uniqueFileNames.forEach(fileName => {
+            for (let i = 0; i < this.files.length; i++) {
+                const file = this.files[i];
                 const listItem = document.createElement('div');
-                listItem.textContent = fileName;
+                listItem.innerHTML = file.name;
                 fileList.appendChild(listItem);
-            });
+            }
         });
         document.getElementById('reportForm').addEventListener('submit', function(event) {
             event.preventDefault();

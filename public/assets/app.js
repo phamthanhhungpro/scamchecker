@@ -32,15 +32,16 @@ const fillDataTableHomepage = () => {
                 `;
                 let td = document.createElement("td");
                 td.innerHTML = `<i class="fa-sharp fa-solid fa-eye eyeShowDetail"></i>`;
-                if (scammer.isCrawled == true) {
+                if(scammer.link) {
                     td.addEventListener("click", () => {
-                    gotoDetail(scammer.link);
-                });
+                        gotoDetail(scammer.link);
+                    });
                 } else {
                     td.addEventListener("click", () => {
-                    gotoDetailWithId(scammer.id);
-                });
-                } 
+                        gotoDetailWithId(scammer.id);
+                    });
+                }
+
                 row.appendChild(td);
                 document.getElementById("list-scammers").appendChild(row);
             });
@@ -327,16 +328,16 @@ const gotoReportDetail = (id) => {
 
 const approveReport = async (id) => {
     const response = await fetch('http://localhost:3000/api/approveReport', {
-          method: 'POST',
-          headers: {
+        method: 'POST',
+        headers: {
             'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ id }),
-        });
+        },
+        body: JSON.stringify({ id }),
+    });
 
-        if (!response.ok) {
-            alert('Có lỗi xảy ra!');
-        } else {
-            alert('Phê duyệt thành công');
-        }
+    if (!response.ok) {
+        alert('Có lỗi xảy ra!');
+    } else {
+        alert('Phê duyệt thành công');
+    }
 }

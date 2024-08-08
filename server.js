@@ -289,6 +289,11 @@ app.get('/api/getAllReports', async (req, res) => {
 
   try {
     const { count, rows } = await Reports.findAndCountAll({
+      where: {
+      status: {
+        [Op.ne]: 'approved'
+      }
+      },
       limit: parseInt(limit, 10),
       offset: parseInt(offset, 10),
     });
@@ -322,7 +327,7 @@ app.get('/api/getReportDetail', async (req, res) => {
 });
 
 // Example protected route
-app.get('/admin', auth, role(['admin']), (req, res) => {
+app.get('/admin', (req, res) => {
   res.send('Admin content');
 });
 
@@ -333,6 +338,7 @@ initializeDatabase()
       console.log(`Server is running on port ${PORT}`);
     });
   });
+
 
 app.post('/api/approveReport', async (req, res) => {
   const reportId = req.body.id;
@@ -369,4 +375,22 @@ app.post('/api/approveReport', async (req, res) => {
   }
 });
 
+// api to upload multiple files
+app.post('/api/upload', (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Server Error');
+    }
+
+    const uploadFiles = req.files.map(file => file.path);
+    res.json({ uploadFiles });
+  });
+});
+
+// server file from uploads folder
+app.get('/api/uploads/:filename', (req, res) => {
+  const { filename } = req.params;
+  res.sendFile(__dirname + `/uploads/${filename}`);
+});
 

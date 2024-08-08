@@ -165,15 +165,15 @@
                     `;
                     let td = document.createElement("td");
                     td.innerHTML = `<i class="fa-sharp fa-solid fa-eye eyeShowDetail"></i>`;
-                    if (data.isCrawled == true) {
+                    if (data.isCrawled || data.isCrawled == true) {
                         td.addEventListener("click", () => {
-                        gotoDetail(data.link);
-                    });
+                            gotoDetail(data.link);
+                        });
                     } else {
                         td.addEventListener("click", () => {
-                        gotoDetailWithId(data.id);
-                    });
-                    } 
+                            gotoDetailWithId(data.id);
+                        });
+                    }
 
                     row.appendChild(td);
                     tbody.appendChild(row);

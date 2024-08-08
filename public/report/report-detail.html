@@ -124,18 +124,6 @@
                     <span>TỰ TIN GIAO DỊCH</span>
                 </a>
             </div>
-            <nav>
-                <a href="#" class="mx-2 text-dark">Quỹ bảo hiểm</a>
-                <a href="#" class="mx-2 text-dark">Scammer</a>
-                <a href="#" class="mx-2 text-dark">Trung gian</a>
-                <a href="#" class="mx-2 text-dark">Tin tức</a>
-            </nav>
-            <div>
-                <button class="btn btn-danger mx-1">Tố cáo</button>
-                <button id="account-button" class="btn btn-secondary mx-1">
-                    <!-- js generator -->
-                </button>
-            </div>
         </div>
     </header>
 
@@ -188,11 +176,6 @@
                                             Không tán thành: 0
                                         </div>
                                     </div>
-                                    <div>
-                                        <a href="" class="link-default text-secondary">
-                                            <i class="fas fa-exclamation-triangle me-1"></i>Yêu cầu gỡ
-                                        </a>
-                                    </div>
                                 </div>
                                 <div class="text-center" style="padding: 10px">
                                     <button class="btn btn-success" onclick="approve()"><i class="fa fa-check-circle"
@@ -203,7 +186,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
+                        <!-- <div class="card">
                             <div class="card-header">
                                 <h2 class="card-title">Bình luận</h2>
                             </div>
@@ -229,7 +212,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="col-md-4">
                         <div class="card mb-4">
@@ -287,11 +270,11 @@
                 document.getElementById("report-content").innerText = data.content;
                 let div = document.getElementById("image-report");
                 div.innerHTML = "";
-                data.uploadFiles.forEach((url) => {
+                data.uploadFiles.forEach((url) => {console.log(url);
                     let content = `
-                    <a href="${url}" data-fancybox="scammer-images" aria-label="Xem chi tiết" class="initFancybox hstack information-item_image">
+                    <a href="${endpointb}${url}" data-fancybox="scammer-images" aria-label="Xem chi tiết" class="initFancybox hstack information-item_image">
                     <div class="ratio ratio-1x1">
-                        <img src="${url}" class="img-fluid" alt="">
+                        <img src="${endpointb}${url}" class="img-fluid" alt="">
                     </div>`;
                     div.innerHTML += content;
                 });
