@@ -1,4 +1,4 @@
-const endpointb = "http://localhost:3000/api/";
+const endpointb = "http://canhbaoscam.com/api/";
 const check = (key) => {
     return fetch(`${endpointb}check?key=${key}`)
         .then(response => response.json())
@@ -327,7 +327,7 @@ const gotoReportDetail = (id) => {
 };
 
 const approveReport = async (id) => {
-    const response = await fetch('http://localhost:3000/api/approveReport', {
+    const response = await fetch('http://canhbaoscam.com/api/approveReport', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

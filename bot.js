@@ -18,7 +18,7 @@ bot.onText(/\/help/, (msg) => {
 // Listen for any kind of message. There are different kinds of messages.
 bot.on('message', (msg) => {
   const chatId = msg.chat.id;
-  
+
   // If the message is not a command, echo the message
   if (msg.text && !msg.text.startsWith('/')) {
     bot.sendMessage(chatId, `Use /check + [SĐT, STK hoặc facebook]. VD: /check 0334876547`);
@@ -32,8 +32,8 @@ bot.onText(/\/check (.+)/, async (msg, match) => {
 
     try {
         // Make an HTTP request to the external API
-        const response = await axios.get(`http://localhost:3000/check?key=${key}`);
-        
+        const response = await axios.get(`http://canhbaoscam.com/api/check?key=${key}`);
+
         // Send the API response back to the user
         bot.sendMessage(chatId, `${response.data.text}`);
     } catch (error) {
