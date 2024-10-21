@@ -12,7 +12,7 @@ const userRoutes = require('./controller/user.js');
 const baohiemRoutes = require('./controller/bao-hiem.js');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Serve static files from the "public" directory
 app.use(express.static("public"));
