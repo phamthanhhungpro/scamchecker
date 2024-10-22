@@ -76,7 +76,9 @@ app.get("/api/check", async (req, res) => {
 
     if (ownData.length > 0) {
       let text = `Tìm thấy ${ownData.length} kết quả từ dữ liệu của chúng tôi.`;
-      res.json({ text, scams: ownData });
+
+      logRequest(ip, action, JSON.stringify({ keyword, result: ownData }));
+      res.json({ text, scams: ownData, value: `${keyword} liên quan đến ${ownData.length} vụ lừa đảo!` });
       return;
     }
 
@@ -129,7 +131,7 @@ app.get("/api/check", async (req, res) => {
       }
     }
 
-    logRequest(ip, action, JSON.stringify({ keyword, result: scams.length }));
+    logRequest(ip, action, JSON.stringify({ keyword, result: scams }));
     res.json({ text, scams });
   } catch (error) {
     console.error(error);

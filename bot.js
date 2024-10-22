@@ -35,7 +35,7 @@ bot.onText(/\/check (.+)/, async (msg, match) => {
         const response = await axios.get(`http://canhbaoscam.com/api/check?key=${key}`);
 
         // Send the API response back to the user
-        bot.sendMessage(chatId, `${response.data.text}`);
+        bot.sendMessage(chatId, `${response.data.value}`);
     } catch (error) {
         console.error(error);
         bot.sendMessage(chatId, 'Error occurred while calling the API');
