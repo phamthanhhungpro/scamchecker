@@ -10,6 +10,30 @@ const { Op } = require('sequelize');
 const upload = require('./db/multer.js');
 const userRoutes = require('./controller/user.js');
 const baohiemRoutes = require('./controller/bao-hiem.js');
+const { Pool } = require('pg');  // Import the pg library
+
+// Create a PostgreSQL client
+const pool = new Pool({
+  user: 'logstore',
+  host: '46.250.224.140',
+  database: 'logstore',
+  password: 'Logstore@1331',
+  port: 5432,
+});
+
+// Function to log request details to PostgreSQL, including a JSON data column
+async function logRequest(ip, action, jsonData) {
+  const query = `
+    INSERT INTO ScamCheckerLog (Ip, Action, Time, Data)
+    VALUES ($1, $2, NOW(), $3)
+  `;
+  try {
+    await pool.query(query, [ip, action, jsonData]);
+    console.log(`Logged request: ${action} from IP: ${ip} with data: ${jsonData}`);
+  } catch (err) {
+    console.error('Error logging request:', err);
+  }
+}
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -33,6 +57,9 @@ app.use('/api/baohiem', baohiemRoutes);
 
 // Define a route for scraping data
 app.get("/api/check", async (req, res) => {
+  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const action = 'Check Scam';
+
   const keyword = req.query.key;
   try {
 
@@ -102,6 +129,7 @@ app.get("/api/check", async (req, res) => {
       }
     }
 
+    logRequest(ip, action, JSON.stringify({ keyword, result: scams.length }));
     res.json({ text, scams });
   } catch (error) {
     console.error(error);
